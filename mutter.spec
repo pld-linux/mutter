@@ -1,12 +1,12 @@
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	2.27.2
+Version:	2.28.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 URL:		http://git.gnome.org/cgit/mutter
-Source0:	http://download.gnome.org/sources/mutter/2.27/%{name}-%{version}.tar.bz2
-# Source0-md5:	9b7e9ffcb14e90c9f31c973383a1a432
+Source0:	http://download.gnome.org/sources/mutter/2.28/%{name}-%{version}.tar.bz2
+# Source0-md5:	3926895782024cff7af7ca480df46b4f
 BuildRequires:	GConf2-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
