@@ -1,11 +1,11 @@
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	2.31.4
+Version:	2.31.5
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://download.gnome.org/sources/mutter/2.31/%{name}-%{version}.tar.bz2
-# Source0-md5:	739689c00a83b641980ffbff89a9f075
+# Source0-md5:	0bec58091d4a3b1df6d5d6c05a1dd7cd
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	GConf2-devel
 BuildRequires:	autoconf >= 2.50
@@ -70,6 +70,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+mv $RPM_BUILD_ROOT%{_prefix}/{lib,share}/locale
 
 %find_lang %{name}
 
