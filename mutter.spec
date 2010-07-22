@@ -15,7 +15,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gobject-introspection-devel
-BuildRequires:	gtk+2-devel >= 2:2.19.0
+BuildRequires:	gtk+3-devel
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libcanberra-gtk-devel
 BuildRequires:	libtool
@@ -62,7 +62,8 @@ Header files and libraries for developing Mutter plugins.
 %configure \
 	--disable-schemas-install \
 	--disable-silent-rules \
-	--disable-static
+	--disable-static \
+	--with-gtk=3.0
 %{__make}
 
 %install
