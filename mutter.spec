@@ -1,11 +1,11 @@
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	2.31.5
+Version:	2.91.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://download.gnome.org/sources/mutter/2.31/%{name}-%{version}.tar.bz2
-# Source0-md5:	0bec58091d4a3b1df6d5d6c05a1dd7cd
+Source0:	http://download.gnome.org/sources/mutter/2.91/%{name}-%{version}.tar.bz2
+# Source0-md5:	fc4892e90bbb50eef21af5abc3e6c5c5
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	GConf2-devel
 BuildRequires:	autoconf >= 2.50
@@ -14,10 +14,10 @@ BuildRequires:	clutter-devel >= 1.2.0
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gobject-introspection-devel
-BuildRequires:	gtk+3-devel
+BuildRequires:	gobject-introspection-devel >= 0.9.5
+BuildRequires:	gtk+3-devel >= 2.91.0
 BuildRequires:	intltool >= 0.35.0
-BuildRequires:	libcanberra-gtk-devel
+BuildRequires:	libcanberra-gtk-devel >= 0.26
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	startup-notification-devel >= 0.7
@@ -44,7 +44,7 @@ Summary:	Development package for Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	clutter-devel >= 1.2.0
-Requires:	gtk+2-devel >= 2:2.19.0
+Requires:	gtk+3-devel >= 2.91.0
 
 %description devel
 Header files and libraries for developing Mutter plugins.
