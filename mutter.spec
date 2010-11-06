@@ -17,7 +17,7 @@ BuildRequires:	gnome-doc-utils
 BuildRequires:	gobject-introspection-devel >= 0.9.5
 BuildRequires:	gtk+3-devel >= 2.91.0
 BuildRequires:	intltool >= 0.35.0
-BuildRequires:	libcanberra-gtk-devel >= 0.26
+BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	startup-notification-devel >= 0.7
