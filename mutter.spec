@@ -31,6 +31,7 @@ BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	zenity
 Requires(post,preun):	GConf2
 Requires:	zenity
+Provides:	gnome-wm
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
