@@ -1,31 +1,41 @@
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	2.91.4
+Version:	2.91.6
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://download.gnome.org/sources/mutter/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	b6195b41c420b27085a2706b58847644
+# Source0-md5:	7b650c0af5c1fc015d2039746e29d09b
 URL:		http://git.gnome.org/cgit/mutter
-BuildRequires:	GConf2-devel
+BuildRequires:	GConf2-devel >= 1.2.0
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	clutter-devel >= 1.2.0
+BuildRequires:	cairo-devel >= 1.10
+BuildRequires:	clutter-devel >= 1.5.12
+BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
+BuildRequires:	glib2-devel >= 2.14.0
 BuildRequires:	gnome-common
-BuildRequires:	gnome-doc-utils
+BuildRequires:	gnome-doc-utils >= 0.8.0
 BuildRequires:	gobject-introspection-devel >= 0.9.5
 BuildRequires:	gtk+3-devel >= 2.91.7
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libtool
+BuildRequires:	pango-devel >= 1.2.0
 BuildRequires:	pkgconfig
+# only in configure.in
+BuildRequires:	python >= 2.5
 BuildRequires:	startup-notification-devel >= 0.7
+BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXcomposite-devel >= 0.2
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXfixes-devel
+BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	zenity
