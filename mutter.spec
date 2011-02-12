@@ -1,7 +1,7 @@
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
 Version:	2.91.6
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://download.gnome.org/sources/mutter/2.91/%{name}-%{version}.tar.bz2
@@ -14,11 +14,11 @@ BuildRequires:	cairo-devel >= 1.10
 BuildRequires:	clutter-devel >= 1.5.12
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 2.14.0
+BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils >= 0.8.0
 BuildRequires:	gobject-introspection-devel >= 0.9.5
-BuildRequires:	gtk+3-devel >= 2.91.7
+BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libtool
@@ -55,7 +55,7 @@ Summary:	Development package for Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	clutter-devel >= 1.2.0
-Requires:	gtk+3-devel >= 2.91.0
+Requires:	gtk+3-devel >= 3.0.0
 
 %description devel
 Header files and libraries for developing Mutter plugins.
@@ -81,6 +81,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name}
 
@@ -121,7 +123,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mutter-window-demo
 %{_includedir}/mutter
 %attr(755,root,root) %{_libdir}/libmutter-private.so
-%{_libdir}/libmutter-private.la
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Meta-*.gir
 %{_pkgconfigdir}/libmutter-private.pc
