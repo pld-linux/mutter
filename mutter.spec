@@ -1,11 +1,11 @@
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	2.91.90
-Release:	2
+Version:	2.91.91
+Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://download.gnome.org/sources/mutter/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	ba12e59ba436e6db6655f0da8a734f1c
+# Source0-md5:	bf0fa4d9b9a0a94194888b55cdb5f9f9
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	GConf2-devel >= 1.2.0
 BuildRequires:	autoconf >= 2.50
@@ -101,12 +101,14 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc README AUTHORS NEWS HACKING doc/theme-format.txt rationales.txt
-%{_mandir}/man1/mutter.1*
-%{_mandir}/man1/mutter-message.1*
 %attr(755,root,root) %{_bindir}/mutter
 %attr(755,root,root) %{_bindir}/mutter-message
+%attr(755,root,root) %{_bindir}/mutter-theme-viewer
+%attr(755,root,root) %{_bindir}/mutter-window-demo
 %attr(755,root,root) %{_libdir}/libmutter-private.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmutter-private.so.0
+%attr(755,root,root) %{_libdir}/libmutter-wm.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmutter-wm.so.0
 %dir %{_libdir}/mutter
 %dir %{_libdir}/mutter/plugins
 %attr(755,root,root) %{_libdir}/mutter/plugins/default.so
@@ -116,16 +118,18 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gnome/wm-properties/mutter-wm.desktop
 %{_sysconfdir}/gconf/schemas/mutter.schemas
 %{_datadir}/mutter
+%{_mandir}/man1/mutter.1*
+%{_mandir}/man1/mutter-message.1*
+%{_mandir}/man1/mutter-theme-viewer.1*
+%{_mandir}/man1/mutter-window-demo.1*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/mutter-theme-viewer
-%attr(755,root,root) %{_bindir}/mutter-window-demo
 %{_includedir}/mutter
 %attr(755,root,root) %{_libdir}/libmutter-private.so
+%attr(755,root,root) %{_libdir}/libmutter-wm.so
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Meta-*.gir
 %{_pkgconfigdir}/libmutter-private.pc
+%{_pkgconfigdir}/libmutter-wm.pc
 %{_pkgconfigdir}/mutter-plugins.pc
-%{_mandir}/man1/mutter-theme-viewer.1*
-%{_mandir}/man1/mutter-window-demo.1*
