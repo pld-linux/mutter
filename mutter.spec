@@ -1,11 +1,11 @@
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	2.91.91
+Version:	2.91.92
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://download.gnome.org/sources/mutter/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	bf0fa4d9b9a0a94194888b55cdb5f9f9
+# Source0-md5:	17c3df11c16f075b86056f11d460b0e8
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	GConf2-devel >= 1.2.0
 BuildRequires:	autoconf >= 2.50
@@ -17,7 +17,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils >= 0.8.0
-BuildRequires:	gobject-introspection-devel >= 0.9.5
+BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
@@ -105,10 +105,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mutter-message
 %attr(755,root,root) %{_bindir}/mutter-theme-viewer
 %attr(755,root,root) %{_bindir}/mutter-window-demo
-%attr(755,root,root) %{_libdir}/libmutter-private.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmutter-private.so.0
-%attr(755,root,root) %{_libdir}/libmutter-wm.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmutter-wm.so.0
+%attr(755,root,root) %{_libdir}/libmutter.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmutter.so.0
 %dir %{_libdir}/mutter
 %dir %{_libdir}/mutter/plugins
 %attr(755,root,root) %{_libdir}/mutter/plugins/default.so
@@ -126,10 +124,8 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/mutter
-%attr(755,root,root) %{_libdir}/libmutter-private.so
-%attr(755,root,root) %{_libdir}/libmutter-wm.so
+%attr(755,root,root) %{_libdir}/libmutter.so
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Meta-*.gir
-%{_pkgconfigdir}/libmutter-private.pc
-%{_pkgconfigdir}/libmutter-wm.pc
+%{_pkgconfigdir}/libmutter.pc
 %{_pkgconfigdir}/mutter-plugins.pc
