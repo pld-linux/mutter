@@ -5,7 +5,7 @@
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
 Version:	3.0.2.1
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.0/%{name}-%{version}.tar.bz2
@@ -86,7 +86,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{!?with_gnome2:%{__rm} %{_datadir}/gnome/wm-properties/mutter-wm.desktop}
+%{!?with_gnome2:%{__rm} $RPM_BUILD_ROOT%{_datadir}/gnome/wm-properties/mutter-wm.desktop}
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
