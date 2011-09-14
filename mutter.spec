@@ -6,6 +6,7 @@ License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.1/%{name}-%{version}.tar.bz2
 # Source0-md5:	2ca4bc9de6c2da175fad31e614e5ad11
+Patch0:		redraw.patch
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	GConf2-devel >= 1.2.0
 BuildRequires:	autoconf >= 2.50
@@ -62,6 +63,7 @@ Header files and libraries for developing Mutter plugins.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__intltoolize}
