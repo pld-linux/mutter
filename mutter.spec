@@ -1,12 +1,11 @@
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	3.1.90.1
+Version:	3.1.91.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.1/%{name}-%{version}.tar.bz2
-# Source0-md5:	2ca4bc9de6c2da175fad31e614e5ad11
-Patch0:		redraw.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.1/%{name}-%{version}.tar.xz
+# Source0-md5:	2b8b235b859d191bb6c14d2052d753b9
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	GConf2-devel >= 1.2.0
 BuildRequires:	autoconf >= 2.50
@@ -28,6 +27,7 @@ BuildRequires:	pkgconfig
 # only in configure.in
 BuildRequires:	python >= 2.5
 BuildRequires:	startup-notification-devel >= 0.7
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xorg-lib-libX11-devel
@@ -39,6 +39,7 @@ BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXrender-devel
+BuildRequires:	xz
 BuildRequires:	zenity
 Requires(post,preun):	GConf2
 Requires:	zenity
@@ -63,7 +64,6 @@ Header files and libraries for developing Mutter plugins.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__intltoolize}
