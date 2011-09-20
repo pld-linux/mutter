@@ -1,17 +1,17 @@
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	3.1.91.1
+Version:	3.1.92
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.1/%{name}-%{version}.tar.xz
-# Source0-md5:	2b8b235b859d191bb6c14d2052d753b9
+# Source0-md5:	87bd56a469d7c10ebc3d853235e4b4c6
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	GConf2-devel >= 1.2.0
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	cairo-devel >= 1.10
-BuildRequires:	clutter-devel >= 1.7.5
+BuildRequires:	clutter-devel >= 1.8.0
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.28.0
@@ -56,7 +56,7 @@ inherited from the Metacity window manager.
 Summary:	Development package for Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	clutter-devel >= 1.7.5
+Requires:	clutter-devel >= 1.8.0
 Requires:	gtk+3-devel >= 3.0.0
 
 %description devel
