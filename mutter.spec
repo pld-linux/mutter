@@ -4,18 +4,18 @@
 #
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	3.0.2.1
-Release:	3
+Version:	3.2.0
+Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	52212e032309fff6307f9083171fcb1a
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.2/%{name}-%{version}.tar.xz
+# Source0-md5:	a967c8da0e54ae4850fb050109797d0a
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	GConf2-devel >= 1.2.0
 BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10
-BuildRequires:	clutter-devel >= 1.6.0
+BuildRequires:	clutter-devel >= 1.8.0
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.28.0
@@ -31,6 +31,7 @@ BuildRequires:	pkgconfig
 # only in configure.in
 BuildRequires:	python >= 2.5
 BuildRequires:	startup-notification-devel >= 0.7
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xorg-lib-libX11-devel
@@ -42,6 +43,7 @@ BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXrender-devel
+BuildRequires:	xz
 BuildRequires:	zenity
 Requires(post,preun):	GConf2
 Requires:	zenity
@@ -58,7 +60,7 @@ inherited from the Metacity window manager.
 Summary:	Development package for Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	clutter-devel >= 1.2.0
+Requires:	clutter-devel >= 1.8.0
 Requires:	gtk+3-devel >= 3.0.0
 
 %description devel
