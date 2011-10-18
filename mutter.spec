@@ -4,12 +4,12 @@
 #
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	3.2.0
-Release:	2
+Version:	3.2.1
+Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.2/%{name}-%{version}.tar.xz
-# Source0-md5:	a967c8da0e54ae4850fb050109797d0a
+# Source0-md5:	7cbe2f903096c2271c76f656e0a7db03
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	GConf2-devel >= 1.2.0
 BuildRequires:	autoconf >= 2.50
