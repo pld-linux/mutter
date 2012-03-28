@@ -4,25 +4,26 @@
 #
 Summary:	Window and compositing manager based on Clutter
 Name:		mutter
-Version:	3.2.2
-Release:	2
+Version:	3.4.0
+Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.2/%{name}-%{version}.tar.xz
-# Source0-md5:	e367c4a08950953e793ce5c625b2c419
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.4/%{name}-%{version}.tar.xz
+# Source0-md5:	fe2cb8d59872ef87344fff1d4362e3e4
 URL:		http://git.gnome.org/cgit/mutter
-BuildRequires:	GConf2-devel >= 1.2.0
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10
-BuildRequires:	clutter-devel >= 1.8.0
+BuildRequires:	clutter-devel >= 1.9.10
+BuildRequires:	cogl-devel >= 1.9.6
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.28.0
+BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils >= 0.8.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	gtk+3-devel >= 3.0.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.3.0
+BuildRequires:	gtk+3-devel >= 3.3.7
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libtool
@@ -45,7 +46,7 @@ BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xz
 BuildRequires:	zenity
-Requires(post,preun):	GConf2
+Requires(post,postun):	glib2 >= 1:2.26.0
 Requires:	zenity
 Provides:	gnome-wm
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -98,13 +99,12 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%gconf_schema_install mutter.schemas
 /sbin/ldconfig
+%glib_compile_schemas
 
-%preun
-%gconf_schema_uninstall mutter.schemas
-
-%postun -p /sbin/ldconfig
+%postun
+/sbin/ldconfig
+%glib_compile_schemas
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -122,8 +122,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mutter/Meta-*.typelib
 %{_desktopdir}/mutter.desktop
 %{?with_gnome2:%{_datadir}/gnome/wm-properties/mutter-wm.desktop}
-%{_sysconfdir}/gconf/schemas/mutter.schemas
 %{_datadir}/mutter
+%{_datadir}/GConf/gsettings/mutter-schemas.convert
+%{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.xml
+%{_datadir}/gnome-control-center/keybindings/50-mutter-windows.xml
 %{_mandir}/man1/mutter.1*
 %{_mandir}/man1/mutter-message.1*
 %{_mandir}/man1/mutter-theme-viewer.1*
