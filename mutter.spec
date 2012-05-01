@@ -6,12 +6,13 @@ Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
 Version:	3.4.1
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.4/%{name}-%{version}.tar.xz
 # Source0-md5:	3ca02d4ca270e8587643af405c10f57d
 URL:		http://git.gnome.org/cgit/mutter
+Patch0:		%{name}-bug675254.patch
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10
@@ -112,6 +113,7 @@ Mutter.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__intltoolize}
