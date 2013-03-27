@@ -5,32 +5,31 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.6.3
+Version:	3.8.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.6/%{name}-%{version}.tar.xz
-# Source0-md5:	f04273e3e40b484dd0e36f7e8f5783ef
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.8/%{name}-%{version}.tar.xz
+# Source0-md5:	7c77374df3d0a25865fc75d192060c9b
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10
-BuildRequires:	clutter-devel >= 1.9.10
-BuildRequires:	cogl-devel >= 1.9.6
+BuildRequires:	clutter-devel >= 1.13.5
+BuildRequires:	cogl-devel >= 1.13.3
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	gnome-common
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.3.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.7.3
 BuildRequires:	gtk+3-devel >= 3.3.7
+BuildRequires:	gtk-doc >= 1.15
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1.2.0
 BuildRequires:	pkgconfig
-# only in configure.in
-BuildRequires:	python >= 1:2.5
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xorg-lib-libICE-devel
@@ -41,13 +40,14 @@ BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
+BuildRequires:	xorg-lib-libXi-devel >= 1.7
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.26.0
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gsettings-desktop-schemas >= 3.3.0
+Requires:	gsettings-desktop-schemas >= 3.7.3
 Requires:	zenity
 Provides:	gnome-wm
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -69,13 +69,14 @@ Summary:	Mutter shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
 Requires:	cairo >= 1.10
-Requires:	clutter >= 1.9.10
-Requires:	cogl >= 1.9.6
+Requires:	clutter >= 1.13.5
+Requires:	cogl >= 1.13.3
 Requires:	glib2 >= 1:2.26.0
 Requires:	gtk+3 >= 3.3.7
 Requires:	libcanberra-gtk3 >= 0.26
 Requires:	startup-notification >= 0.7
 Requires:	xorg-lib-libXcomposite >= 0.2
+Requires:	xorg-lib-libXi >= 1.7
 Conflicts:	mutter < 3.4.0-2
 
 %description libs
@@ -165,10 +166,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/GConf/gsettings/mutter-schemas.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-windows.xml
+%{_datadir}/gnome-control-center/keybindings/50-mutter-navigation.xml
+%{_datadir}/gnome-control-center/keybindings/50-mutter-system.xml
 %{_mandir}/man1/mutter.1*
 %{_mandir}/man1/mutter-message.1*
 %{_mandir}/man1/mutter-theme-viewer.1*
 %{_mandir}/man1/mutter-window-demo.1*
+#%{_datadir}/gtk-doc/html/meta
 
 %files libs
 %defattr(644,root,root,755)
