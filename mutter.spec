@@ -30,6 +30,7 @@ BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1.2.0
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.98
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xorg-lib-libICE-devel
@@ -91,8 +92,8 @@ Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel >= 1.10
-Requires:	clutter-devel >= 1.9.10
-Requires:	cogl-devel >= 1.9.6
+Requires:	clutter-devel >= 1.13.5
+Requires:	cogl-devel >= 1.13.3
 Requires:	glib2-devel >= 1:2.26.0
 Requires:	gtk+3-devel >= 3.3.7
 Requires:	libcanberra-gtk3-devel >= 0.26
@@ -110,6 +111,18 @@ Header files for developing Mutter plugins.
 Pliki nagłówkowe do tworzenia wtyczek zarządcy okien i składania
 Mutter.
 
+%package apidocs
+Summary:	Mutter (Meta) API documentation
+Summary(pl.UTF-8):	Dokumentacja API Mutter (Meta)
+Group:		Documentation
+Requires:	gtk-doc-common
+
+%description apidocs
+Mutter (Meta) API documentation.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API Mutter (Meta).
+
 %prep
 %setup -q
 
@@ -124,7 +137,8 @@ Mutter.
 	ZENITY=/usr/bin/zenity \
 	--disable-schemas-install \
 	--disable-silent-rules \
-	--disable-static
+	--disable-static \
+	--with-html-dir=%{_gtkdocdir}
 %{__make}
 
 %install
@@ -172,7 +186,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/mutter-message.1*
 %{_mandir}/man1/mutter-theme-viewer.1*
 %{_mandir}/man1/mutter-window-demo.1*
-#%{_datadir}/gtk-doc/html/meta
 
 %files libs
 %defattr(644,root,root,755)
@@ -190,3 +203,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mutter/Meta-*.gir
 %{_pkgconfigdir}/libmutter.pc
 %{_pkgconfigdir}/mutter-plugins.pc
+
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/meta
