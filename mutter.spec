@@ -5,12 +5,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.8.0
-Release:	2
+Version:	3.8.1
+Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.8/%{name}-%{version}.tar.xz
-# Source0-md5:	7c77374df3d0a25865fc75d192060c9b
+# Source0-md5:	082dca083a59231664f7bc9bc320acae
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.11
@@ -135,7 +135,6 @@ Dokumentacja API Mutter (Meta).
 %{__automake}
 %configure \
 	ZENITY=/usr/bin/zenity \
-	--disable-schemas-install \
 	--disable-silent-rules \
 	--disable-static \
 	--with-html-dir=%{_gtkdocdir}
