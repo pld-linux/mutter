@@ -5,17 +5,17 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.8.2
+Version:	3.8.3
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.8/%{name}-%{version}.tar.xz
-# Source0-md5:	b61374f2b8f978c99c2e8d00b7774255
+# Source0-md5:	b4cbbb23312b71bcb4ac917647d6549c
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10
-BuildRequires:	clutter-devel >= 1.13.5
+BuildRequires:	clutter-devel >= 1.14.3
 BuildRequires:	cogl-devel >= 1.13.3
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
@@ -70,7 +70,7 @@ Summary:	Mutter shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
 Requires:	cairo >= 1.10
-Requires:	clutter >= 1.13.5
+Requires:	clutter >= 1.14.3
 Requires:	cogl >= 1.13.3
 Requires:	glib2 >= 1:2.26.0
 Requires:	gtk+3 >= 3.3.7
@@ -92,7 +92,7 @@ Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel >= 1.10
-Requires:	clutter-devel >= 1.13.5
+Requires:	clutter-devel >= 1.14.3
 Requires:	cogl-devel >= 1.13.3
 Requires:	glib2-devel >= 1:2.26.0
 Requires:	gtk+3-devel >= 3.3.7
