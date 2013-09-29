@@ -5,25 +5,25 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.8.4
+Version:	3.10.0.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.8/%{name}-%{version}.tar.xz
-# Source0-md5:	cfe0233d783f1f6ee529448c1888492e
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.10/%{name}-%{version}.tar.xz
+# Source0-md5:	b063138ece1c93de5797cc306021c4bd
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10
-BuildRequires:	clutter-devel >= 1.14.3
-BuildRequires:	cogl-devel >= 1.13.3
+BuildRequires:	clutter-devel >= 1.15.90
+BuildRequires:	cogl-devel >= 1.15.6
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	gnome-common
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.7.3
-BuildRequires:	gtk+3-devel >= 3.3.7
+BuildRequires:	gtk+3-devel >= 3.9.11
 BuildRequires:	gtk-doc >= 1.15
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
@@ -168,23 +168,16 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README AUTHORS NEWS HACKING doc/theme-format.txt rationales.txt
 %attr(755,root,root) %{_bindir}/mutter
-%attr(755,root,root) %{_bindir}/mutter-message
-%attr(755,root,root) %{_bindir}/mutter-theme-viewer
-%attr(755,root,root) %{_bindir}/mutter-window-demo
 %dir %{_libdir}/mutter/plugins
 %attr(755,root,root) %{_libdir}/mutter/plugins/default.so
 %{_desktopdir}/mutter.desktop
 %{?with_gnome2:%{_datadir}/gnome/wm-properties/mutter-wm.desktop}
-%{_datadir}/mutter
 %{_datadir}/GConf/gsettings/mutter-schemas.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-windows.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-navigation.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-system.xml
 %{_mandir}/man1/mutter.1*
-%{_mandir}/man1/mutter-message.1*
-%{_mandir}/man1/mutter-theme-viewer.1*
-%{_mandir}/man1/mutter-window-demo.1*
 
 %files libs
 %defattr(644,root,root,755)
