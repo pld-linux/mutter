@@ -21,6 +21,7 @@ BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	gnome-common
+BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.7.3
 BuildRequires:	gtk+3-devel >= 3.9.11
@@ -28,11 +29,12 @@ BuildRequires:	gtk-doc >= 1.15
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libtool
-BuildRequires:	pango-devel >= 1.2.0
+BuildRequires:	pango-devel >= 1:1.2.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.98
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	upower-devel >= 0.9.12
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xorg-lib-libX11-devel
@@ -70,12 +72,14 @@ Summary:	Mutter shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
 Requires:	cairo >= 1.10
-Requires:	clutter >= 1.14.3
-Requires:	cogl >= 1.13.3
+Requires:	clutter >= 1.15.90
+Requires:	cogl >= 1.15.6
 Requires:	glib2 >= 1:2.26.0
-Requires:	gtk+3 >= 3.3.7
+Requires:	gnome-desktop >= 3.0
+Requires:	gtk+3 >= 3.9.11
 Requires:	libcanberra-gtk3 >= 0.26
 Requires:	startup-notification >= 0.7
+Requires:	upower-libs >= 0.9.12
 Requires:	xorg-lib-libXcomposite >= 0.2
 Requires:	xorg-lib-libXi >= 1.6
 Conflicts:	mutter < 3.4.0-2
@@ -92,10 +96,10 @@ Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel >= 1.10
-Requires:	clutter-devel >= 1.14.3
-Requires:	cogl-devel >= 1.13.3
+Requires:	clutter-devel >= 1.15.90
+Requires:	cogl-devel >= 1.15.6
 Requires:	glib2-devel >= 1:2.26.0
-Requires:	gtk+3-devel >= 3.3.7
+Requires:	gtk+3-devel >= 3.9.11
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	startup-notification-devel >= 0.7
 Requires:	xorg-lib-libXcomposite-devel >= 0.2
