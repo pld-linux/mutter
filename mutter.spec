@@ -11,6 +11,7 @@ License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.10/%{name}-%{version}.tar.xz
 # Source0-md5:	e25602e010097aa44611da102c514c7c
+Patch0:		cogl-1.17.patch
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.11
@@ -129,6 +130,7 @@ Dokumentacja API Mutter (Meta).
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__intltoolize}
