@@ -5,19 +5,18 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.10.4
-Release:	2
+Version:	3.12.0
+Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.10/%{name}-%{version}.tar.xz
-# Source0-md5:	e25602e010097aa44611da102c514c7c
-Patch0:		cogl-1.17.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.12/%{name}-%{version}.tar.xz
+# Source0-md5:	12bd2f1e49430705e029825901b60704
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10
 BuildRequires:	clutter-devel >= 1.15.90
-BuildRequires:	cogl-devel >= 1.15.6
+BuildRequires:	cogl-devel >= 1.18.0
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.26.0
@@ -35,7 +34,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.98
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	tar >= 1:1.22
-BuildRequires:	upower-devel >= 0.9.12
+BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xorg-lib-libX11-devel
@@ -74,13 +73,13 @@ Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
 Requires:	cairo >= 1.10
 Requires:	clutter >= 1.15.90
-Requires:	cogl >= 1.15.6
+Requires:	cogl >= 1.18.0
 Requires:	glib2 >= 1:2.26.0
 Requires:	gnome-desktop >= 3.0
 Requires:	gtk+3 >= 3.9.11
 Requires:	libcanberra-gtk3 >= 0.26
 Requires:	startup-notification >= 0.7
-Requires:	upower-libs >= 0.9.12
+Requires:	upower-libs >= 0.99.0
 Requires:	xorg-lib-libXcomposite >= 0.2
 Requires:	xorg-lib-libXi >= 1.6
 Conflicts:	mutter < 3.4.0-2
@@ -98,7 +97,7 @@ Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel >= 1.10
 Requires:	clutter-devel >= 1.15.90
-Requires:	cogl-devel >= 1.15.6
+Requires:	cogl-devel >= 1.18.0
 Requires:	glib2-devel >= 1:2.26.0
 Requires:	gtk+3-devel >= 3.9.11
 Requires:	libcanberra-gtk3-devel >= 0.26
@@ -130,7 +129,6 @@ Dokumentacja API Mutter (Meta).
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__intltoolize}
