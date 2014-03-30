@@ -14,7 +14,7 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.12/%{name}-%{version}.t
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.11
-BuildRequires:	cairo-devel >= 1.10
+BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	clutter-devel >= 1.15.90
 BuildRequires:	cogl-devel >= 1.18.0
 BuildRequires:	gdk-pixbuf2-devel
@@ -71,7 +71,7 @@ odziedziczoną z zarządcy okien Metacity.
 Summary:	Mutter shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
-Requires:	cairo >= 1.10
+Requires:	cairo >= 1.10.0
 Requires:	clutter >= 1.15.90
 Requires:	cogl >= 1.18.0
 Requires:	glib2 >= 1:2.26.0
@@ -81,7 +81,7 @@ Requires:	libcanberra-gtk3 >= 0.26
 Requires:	startup-notification >= 0.7
 Requires:	upower-libs >= 0.99.0
 Requires:	xorg-lib-libXcomposite >= 0.2
-Requires:	xorg-lib-libXi >= 1.6
+Requires:	xorg-lib-libXi >= 1.7
 Conflicts:	mutter < 3.4.0-2
 
 %description libs
@@ -95,7 +95,7 @@ Summary:	Development package for Mutter
 Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	cairo-devel >= 1.10
+Requires:	cairo-devel >= 1.10.0
 Requires:	clutter-devel >= 1.15.90
 Requires:	cogl-devel >= 1.18.0
 Requires:	glib2-devel >= 1:2.26.0
