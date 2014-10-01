@@ -1,21 +1,18 @@
-#
-# Conditional build:
-%bcond_with	gnome2		# build with support for GNOME2 wm-properties
-
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.12.2
-Release:	2
+Version:	3.14.0
+Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.12/%{name}-%{version}.tar.xz
-# Source0-md5:	cdc714426c246e447e62755df0157783
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.14/%{name}-%{version}.tar.xz
+# Source0-md5:	f980505e4198399aa2224343dd0a9f3e
 URL:		http://git.gnome.org/cgit/mutter
-BuildRequires:	autoconf >= 2.50
+BuildRequires:	Mesa-libgbm-devel
+BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10.0
-BuildRequires:	clutter-devel >= 1.15.90
+BuildRequires:	clutter-devel >= 1.20.0
 BuildRequires:	cogl-devel >= 1.18.0
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
@@ -23,10 +20,10 @@ BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	gnome-common
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.7.3
-BuildRequires:	gtk+3-devel >= 3.9.11
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.8.0
+BuildRequires:	gtk+3-devel >= 3.10.0
 BuildRequires:	gtk-doc >= 1.15
-BuildRequires:	intltool >= 0.35.0
+BuildRequires:	intltool >= 0.41.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1:1.2.0
@@ -35,6 +32,7 @@ BuildRequires:	rpmbuild(macros) >= 1.98
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	upower-devel >= 0.99.0
+BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xorg-lib-libX11-devel
@@ -47,10 +45,12 @@ BuildRequires:	xorg-lib-libXi-devel >= 1.7
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXrender-devel
+BuildRequires:	xorg-lib-libxkbcommon-devel
+BuildRequires:	xorg-lib-libxkbcommon-x11-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.26.0
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gsettings-desktop-schemas >= 3.7.3
+Requires:	gsettings-desktop-schemas >= 3.8.0
 Requires:	zenity
 Provides:	gnome-wm
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -72,11 +72,11 @@ Summary:	Mutter shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
 Requires:	cairo >= 1.10.0
-Requires:	clutter >= 1.15.90
+Requires:	clutter >= 1.20.0
 Requires:	cogl >= 1.18.0
 Requires:	glib2 >= 1:2.26.0
 Requires:	gnome-desktop >= 3.0
-Requires:	gtk+3 >= 3.9.11
+Requires:	gtk+3 >= 3.10.0
 Requires:	libcanberra-gtk3 >= 0.26
 Requires:	startup-notification >= 0.7
 Requires:	upower-libs >= 0.99.0
@@ -96,10 +96,10 @@ Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel >= 1.10.0
-Requires:	clutter-devel >= 1.15.90
+Requires:	clutter-devel >= 1.20.0
 Requires:	cogl-devel >= 1.18.0
 Requires:	glib2-devel >= 1:2.26.0
-Requires:	gtk+3-devel >= 3.9.11
+Requires:	gtk+3-devel >= 3.10.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	startup-notification-devel >= 0.7
 Requires:	xorg-lib-libXcomposite-devel >= 0.2
@@ -153,8 +153,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{!?with_gnome2:%{__rm} $RPM_BUILD_ROOT%{_datadir}/gnome/wm-properties/mutter-wm.desktop}
-
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name}
@@ -173,14 +171,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README AUTHORS NEWS HACKING doc/theme-format.txt rationales.txt
+%doc NEWS doc/*.txt
 %attr(755,root,root) %{_bindir}/mutter
 %dir %{_libdir}/mutter/plugins
 %attr(755,root,root) %{_libdir}/mutter/plugins/default.so
+%attr(755,root,root) %{_libexecdir}/mutter-restart-helper
 %{_desktopdir}/mutter.desktop
-%{?with_gnome2:%{_datadir}/gnome/wm-properties/mutter-wm.desktop}
+%{_desktopdir}/mutter-wayland.desktop
 %{_datadir}/GConf/gsettings/mutter-schemas.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.mutter.wayland.gschema.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-windows.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-navigation.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-system.xml
@@ -201,7 +201,6 @@ rm -rf $RPM_BUILD_ROOT
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Meta-*.gir
 %{_pkgconfigdir}/libmutter.pc
-%{_pkgconfigdir}/mutter-plugins.pc
 
 %files apidocs
 %defattr(644,root,root,755)
