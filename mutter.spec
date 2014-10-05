@@ -25,13 +25,19 @@ BuildRequires:	gtk+3-devel >= 3.10.0
 BuildRequires:	gtk-doc >= 1.15
 BuildRequires:	intltool >= 0.41.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
-BuildRequires:	libtool
+BuildRequires:	libdrm-devel
+BuildRequires:	libinput-devel
+BuildRequires:	libtool >= 2:2.2.6
+# xcb-randr
+BuildRequires:	libxcb-devel
 BuildRequires:	pango-devel >= 1:1.2.0
-BuildRequires:	pkgconfig
+BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	rpmbuild(macros) >= 1.98
 BuildRequires:	startup-notification-devel >= 0.7
+BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	upower-devel >= 0.99.0
+BuildRequires:	wayland-devel >= 1.5.90
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
@@ -47,12 +53,14 @@ BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xorg-lib-libxkbcommon-devel
 BuildRequires:	xorg-lib-libxkbcommon-x11-devel
+BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.26.0
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gsettings-desktop-schemas >= 3.8.0
 Requires:	zenity
 Provides:	gnome-wm
+Obsoletes:	mutter-wayland < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -80,8 +88,10 @@ Requires:	gtk+3 >= 3.10.0
 Requires:	libcanberra-gtk3 >= 0.26
 Requires:	startup-notification >= 0.7
 Requires:	upower-libs >= 0.99.0
+Requires:	wayland >= 1.5.90
 Requires:	xorg-lib-libXcomposite >= 0.2
 Requires:	xorg-lib-libXi >= 1.7
+Obsoletes:	mutter-wayland-libs < 3.14
 Conflicts:	mutter < 3.4.0-2
 
 %description libs
@@ -107,6 +117,7 @@ Requires:	xorg-lib-libXcursor-devel
 Requires:	xorg-lib-libXdamage-devel
 Requires:	xorg-lib-libXfixes-devel
 Requires:	xorg-lib-libXrender-devel
+Obsoletes:	mutter-wayland-devel < 3.14
 
 %description devel
 Header files for developing Mutter plugins.
@@ -120,6 +131,7 @@ Summary:	Mutter (Meta) API documentation
 Summary(pl.UTF-8):	Dokumentacja API Mutter (Meta)
 Group:		Documentation
 Requires:	gtk-doc-common
+Obsoletes:	mutter-wayland-apidocs < 3.14
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
