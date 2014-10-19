@@ -8,7 +8,7 @@ Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.14/%{name}-%{version}.tar.xz
 # Source0-md5:	eda38cf1ad26ab8e1d4f3b74bbd7af47
 URL:		http://git.gnome.org/cgit/mutter
-BuildRequires:	Mesa-libgbm-devel
+BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10.0
@@ -79,6 +79,7 @@ odziedziczoną z zarządcy okien Metacity.
 Summary:	Mutter shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
+Requires:	Mesa-libgbm >= 10.3
 Requires:	cairo >= 1.10.0
 Requires:	clutter >= 1.20.0
 Requires:	cogl >= 1.18.0
