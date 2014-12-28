@@ -15,7 +15,7 @@ BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	clutter-devel >= 1.20.0
 BuildRequires:	cogl-devel >= 1.18.0
 BuildRequires:	gdk-pixbuf2-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	gnome-common
 BuildRequires:	gnome-desktop-devel >= 3.0
