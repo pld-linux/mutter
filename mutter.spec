@@ -1,26 +1,26 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.14.3
+Version:	3.16.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.14/%{name}-%{version}.tar.xz
-# Source0-md5:	0f5b6beea5ae58c9ad1073ca8e47e19a
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.16/%{name}-%{version}.tar.xz
+# Source0-md5:	9e9006bd5bac56624c8baf6f6f6aae9d
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10.0
-BuildRequires:	clutter-devel >= 1.20.0
+BuildRequires:	clutter-devel >= 1.21.3
 BuildRequires:	cogl-devel >= 1.18.0
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.26.0
+BuildRequires:	glib2-devel >= 1:2.35.1
 BuildRequires:	gnome-common
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.8.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.15.92
 BuildRequires:	gtk+3-devel >= 3.10.0
 BuildRequires:	gtk-doc >= 1.15
 BuildRequires:	intltool >= 0.41.0
@@ -57,7 +57,7 @@ BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.26.0
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gsettings-desktop-schemas >= 3.8.0
+Requires:	gsettings-desktop-schemas >= 3.15.92
 Requires:	zenity
 Provides:	gnome-wm
 Obsoletes:	mutter-wayland < 3.14
@@ -81,9 +81,9 @@ Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
 Requires:	Mesa-libgbm >= 10.3
 Requires:	cairo >= 1.10.0
-Requires:	clutter >= 1.20.0
+Requires:	clutter >= 1.21.3
 Requires:	cogl >= 1.18.0
-Requires:	glib2 >= 1:2.26.0
+Requires:	glib2 >= 1:2.25.1
 Requires:	gnome-desktop >= 3.0
 Requires:	gtk+3 >= 3.10.0
 Requires:	libcanberra-gtk3 >= 0.26
@@ -107,9 +107,9 @@ Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel >= 1.10.0
-Requires:	clutter-devel >= 1.20.0
+Requires:	clutter-devel >= 1.21.3
 Requires:	cogl-devel >= 1.18.0
-Requires:	glib2-devel >= 1:2.26.0
+Requires:	glib2-devel >= 1:2.25.1
 Requires:	gtk+3-devel >= 3.10.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	startup-notification-devel >= 0.7
