@@ -1,12 +1,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.16.0
+Version:	3.16.1.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.16/%{name}-%{version}.tar.xz
-# Source0-md5:	9e9006bd5bac56624c8baf6f6f6aae9d
+# Source0-md5:	a3a93b5171ffcf9aa0ffe336da61e2c3
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	autoconf >= 2.62
@@ -37,7 +37,7 @@ BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	upower-devel >= 0.99.0
-BuildRequires:	wayland-devel >= 1.5.90
+BuildRequires:	wayland-devel >= 1.6.90
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
@@ -51,11 +51,11 @@ BuildRequires:	xorg-lib-libXi-devel >= 1.7
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXrender-devel
-BuildRequires:	xorg-lib-libxkbcommon-devel
+BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbcommon-x11-devel
 BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.26.0
+Requires(post,postun):	glib2 >= 1:2.35.1
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gsettings-desktop-schemas >= 3.15.92
 Requires:	zenity
@@ -83,13 +83,13 @@ Requires:	Mesa-libgbm >= 10.3
 Requires:	cairo >= 1.10.0
 Requires:	clutter >= 1.21.3
 Requires:	cogl >= 1.18.0
-Requires:	glib2 >= 1:2.25.1
+Requires:	glib2 >= 1:2.35.1
 Requires:	gnome-desktop >= 3.0
 Requires:	gtk+3 >= 3.10.0
 Requires:	libcanberra-gtk3 >= 0.26
 Requires:	startup-notification >= 0.7
 Requires:	upower-libs >= 0.99.0
-Requires:	wayland >= 1.5.90
+Requires:	wayland >= 1.6.90
 Requires:	xorg-lib-libXcomposite >= 0.2
 Requires:	xorg-lib-libXi >= 1.7
 Obsoletes:	mutter-wayland-libs < 3.14
@@ -109,7 +109,7 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel >= 1.10.0
 Requires:	clutter-devel >= 1.21.3
 Requires:	cogl-devel >= 1.18.0
-Requires:	glib2-devel >= 1:2.25.1
+Requires:	glib2-devel >= 1:2.35.1
 Requires:	gtk+3-devel >= 3.10.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	startup-notification-devel >= 0.7
