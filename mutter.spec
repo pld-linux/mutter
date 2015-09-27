@@ -1,18 +1,18 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.16.3
+Version:	3.18.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.16/%{name}-%{version}.tar.xz
-# Source0-md5:	99d4093797833110d276555f4035f659
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.18/%{name}-%{version}.tar.xz
+# Source0-md5:	3a06c8a7cb4552ab636963ad7a51243a
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10.0
-BuildRequires:	clutter-devel >= 1.21.3
+BuildRequires:	clutter-devel >= 1.24.0
 BuildRequires:	cogl-devel >= 1.18.0
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-tools
@@ -22,7 +22,6 @@ BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.15.92
 BuildRequires:	gtk+3-devel >= 3.10.0
-BuildRequires:	gtk-doc >= 1.15
 BuildRequires:	intltool >= 0.41.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libdrm-devel
@@ -60,7 +59,9 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gsettings-desktop-schemas >= 3.15.92
 Requires:	zenity
 Provides:	gnome-wm
+Obsoletes:	mutter-apidocs < 3.18
 Obsoletes:	mutter-wayland < 3.14
+Obsoletes:	mutter-wayland-apidocs < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -81,7 +82,7 @@ Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
 Requires:	Mesa-libgbm >= 10.3
 Requires:	cairo >= 1.10.0
-Requires:	clutter >= 1.21.3
+Requires:	clutter >= 1.24.0
 Requires:	cogl >= 1.18.0
 Requires:	glib2 >= 1:2.35.1
 Requires:	gnome-desktop >= 3.0
@@ -127,22 +128,6 @@ Header files for developing Mutter plugins.
 Pliki nagłówkowe do tworzenia wtyczek zarządcy okien i składania
 Mutter.
 
-%package apidocs
-Summary:	Mutter (Meta) API documentation
-Summary(pl.UTF-8):	Dokumentacja API Mutter (Meta)
-Group:		Documentation
-Requires:	gtk-doc-common
-Obsoletes:	mutter-wayland-apidocs < 3.14
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
-
-%description apidocs
-Mutter (Meta) API documentation.
-
-%description apidocs -l pl.UTF-8
-Dokumentacja API Mutter (Meta).
-
 %prep
 %setup -q
 
@@ -157,8 +142,7 @@ Dokumentacja API Mutter (Meta).
 	ZENITY=/usr/bin/zenity \
 	--enable-compile-warnings=maximum \
 	--disable-silent-rules \
-	--disable-static \
-	--with-html-dir=%{_gtkdocdir}
+	--disable-static
 %{__make}
 
 %install
@@ -215,7 +199,3 @@ rm -rf $RPM_BUILD_ROOT
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Meta-*.gir
 %{_pkgconfigdir}/libmutter.pc
-
-%files apidocs
-%defattr(644,root,root,755)
-%{_gtkdocdir}/meta
