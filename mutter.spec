@@ -12,6 +12,7 @@ BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10.0
+# clutter-egl-1.0 clutter-wayland-1.0 clutter-wayland-compositor-1.0
 BuildRequires:	clutter-devel >= 1.24.0
 BuildRequires:	cogl-devel >= 1.18.0
 BuildRequires:	gdk-pixbuf2-devel
@@ -108,7 +109,7 @@ Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel >= 1.10.0
-Requires:	clutter-devel >= 1.21.3
+Requires:	clutter-devel >= 1.24.0
 Requires:	cogl-devel >= 1.18.0
 Requires:	glib2-devel >= 1:2.35.1
 Requires:	gtk+3-devel >= 3.10.0
