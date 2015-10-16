@@ -1,12 +1,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.18.0
-Release:	2
+Version:	3.18.1
+Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.18/%{name}-%{version}.tar.xz
-# Source0-md5:	3a06c8a7cb4552ab636963ad7a51243a
+# Source0-md5:	d5218fc0d0f46b1b959c488100ae3c88
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	autoconf >= 2.62
