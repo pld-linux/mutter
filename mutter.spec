@@ -1,19 +1,19 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.18.3
+Version:	3.20.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.18/%{name}-%{version}.tar.xz
-# Source0-md5:	3f3487468d9b0a4a2cdd602dddaa51c4
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.20/%{name}-%{version}.tar.xz
+# Source0-md5:	916d7ab7d05ebe891828d343debf3aef
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10.0
 # clutter-egl-1.0 clutter-wayland-1.0 clutter-wayland-compositor-1.0
-BuildRequires:	clutter-devel >= 1.24.0
+BuildRequires:	clutter-devel >= 1.26.0
 BuildRequires:	cogl-devel >= 1.18.0
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-tools
@@ -21,8 +21,8 @@ BuildRequires:	glib2-devel >= 1:2.35.1
 BuildRequires:	gnome-common
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.15.92
-BuildRequires:	gtk+3-devel >= 3.10.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.20.0
+BuildRequires:	gtk+3-devel >= 3.20.0
 BuildRequires:	intltool >= 0.41.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libdrm-devel
@@ -36,6 +36,7 @@ BuildRequires:	rpmbuild(macros) >= 1.98
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.6.90
 BuildRequires:	xkeyboard-config
@@ -57,7 +58,7 @@ BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.35.1
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gsettings-desktop-schemas >= 3.15.92
+Requires:	gsettings-desktop-schemas >= 3.20.0
 Requires:	zenity
 Provides:	gnome-wm
 Obsoletes:	mutter-apidocs < 3.18
@@ -83,11 +84,11 @@ Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
 Requires:	Mesa-libgbm >= 10.3
 Requires:	cairo >= 1.10.0
-Requires:	clutter >= 1.24.0
+Requires:	clutter >= 1.26.0
 Requires:	cogl >= 1.18.0
 Requires:	glib2 >= 1:2.35.1
 Requires:	gnome-desktop >= 3.0
-Requires:	gtk+3 >= 3.10.0
+Requires:	gtk+3 >= 3.20.0
 Requires:	libcanberra-gtk3 >= 0.26
 Requires:	startup-notification >= 0.7
 Requires:	upower-libs >= 0.99.0
@@ -109,10 +110,10 @@ Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel >= 1.10.0
-Requires:	clutter-devel >= 1.24.0
+Requires:	clutter-devel >= 1.26.0
 Requires:	cogl-devel >= 1.18.0
 Requires:	glib2-devel >= 1:2.35.1
-Requires:	gtk+3-devel >= 3.10.0
+Requires:	gtk+3-devel >= 3.20.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	startup-notification-devel >= 0.7
 Requires:	xorg-lib-libXcomposite-devel >= 0.2
@@ -176,7 +177,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/mutter/plugins/default.so
 %attr(755,root,root) %{_libexecdir}/mutter-restart-helper
 %{_desktopdir}/mutter.desktop
-%{_desktopdir}/mutter-wayland.desktop
 %{_datadir}/GConf/gsettings/mutter-schemas.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.wayland.gschema.xml
