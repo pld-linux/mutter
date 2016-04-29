@@ -39,6 +39,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.6.90
+BuildRequires:	wayland-protocols >= 1.1
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
