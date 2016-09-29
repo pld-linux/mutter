@@ -1,33 +1,31 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.20.3
+Version:	3.22.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.20/%{name}-%{version}.tar.xz
-# Source0-md5:	7b847d952a108be4c4096e8842db00eb
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.22/%{name}-%{version}.tar.xz
+# Source0-md5:	e448039015b355e7e2b9f86087e2f399
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10.0
-# clutter-egl-1.0 clutter-wayland-1.0 clutter-wayland-compositor-1.0
-BuildRequires:	clutter-devel >= 1.26.0
-BuildRequires:	cogl-devel >= 1.18.0
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.35.1
+BuildRequires:	glib2-devel >= 1:2.50.0
 BuildRequires:	gnome-common
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.20.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.22.0
 BuildRequires:	gtk+3-devel >= 3.20.0
-BuildRequires:	intltool >= 0.41.0
+BuildRequires:	json-glib-devel
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libdrm-devel
 BuildRequires:	libinput-devel
 BuildRequires:	libtool >= 2:2.2.6
+BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr
 BuildRequires:	libxcb-devel
 BuildRequires:	pango-devel >= 1:1.2.0
@@ -39,7 +37,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.6.90
-BuildRequires:	wayland-protocols >= 1.1
+BuildRequires:	wayland-protocols >= 1.7
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
@@ -51,7 +49,7 @@ BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXi-devel >= 1.7
 BuildRequires:	xorg-lib-libXinerama-devel
-BuildRequires:	xorg-lib-libXrandr-devel
+BuildRequires:	xorg-lib-libXrandr-devel >= 1.5.0
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbcommon-x11-devel
@@ -59,7 +57,7 @@ BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.35.1
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gsettings-desktop-schemas >= 3.20.0
+Requires:	gsettings-desktop-schemas >= 3.22.0
 Requires:	zenity
 Provides:	gnome-wm
 Obsoletes:	mutter-apidocs < 3.18
@@ -85,9 +83,7 @@ Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
 Requires:	Mesa-libgbm >= 10.3
 Requires:	cairo >= 1.10.0
-Requires:	clutter >= 1.26.0
-Requires:	cogl >= 1.18.0
-Requires:	glib2 >= 1:2.35.1
+Requires:	glib2 >= 1:2.50.0
 Requires:	gnome-desktop >= 3.0
 Requires:	gtk+3 >= 3.20.0
 Requires:	libcanberra-gtk3 >= 0.26
@@ -111,9 +107,7 @@ Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel >= 1.10.0
-Requires:	clutter-devel >= 1.26.0
-Requires:	cogl-devel >= 1.18.0
-Requires:	glib2-devel >= 1:2.35.1
+Requires:	glib2-devel >= 1:2.50.0
 Requires:	gtk+3-devel >= 3.20.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	startup-notification-devel >= 0.7
@@ -135,7 +129,6 @@ Mutter.
 %setup -q
 
 %build
-%{__intltoolize}
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
@@ -155,6 +148,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/mutter/*.la
 
 %find_lang %{name}
 
@@ -191,7 +185,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmutter.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmutter.so.0
 %dir %{_libdir}/mutter
+%attr(755,root,root) %{_libdir}/mutter/libmutter-clutter-1.0.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-pango.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-path.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl.so
 # intentionally installed in package-private dir
+%{_libdir}/mutter/Cally-*.typelib
+%{_libdir}/mutter/Clutter-*.typelib
+%{_libdir}/mutter/ClutterX11-*.typelib
+%{_libdir}/mutter/Cogl-*.typelib
+%{_libdir}/mutter/CoglPango-*.typelib
 %{_libdir}/mutter/Meta-*.typelib
 
 %files devel
@@ -199,5 +202,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmutter.so
 %{_includedir}/mutter
 # intentionally installed in package-private dir
+%{_libdir}/mutter/Cally-*.gir
+%{_libdir}/mutter/Clutter-*.gir
+%{_libdir}/mutter/ClutterX11-*.gir
+%{_libdir}/mutter/Cogl-*.gir
+%{_libdir}/mutter/CoglPango-*.gir
 %{_libdir}/mutter/Meta-*.gir
 %{_pkgconfigdir}/libmutter.pc
+%{_pkgconfigdir}/mutter-clutter-1.0.pc
+%{_pkgconfigdir}/mutter-clutter-x11-1.0.pc
+%{_pkgconfigdir}/mutter-cogl-1.0.pc
+%{_pkgconfigdir}/mutter-cogl-pango-1.0.pc
+%{_pkgconfigdir}/mutter-cogl-path-1.0.pc
+
