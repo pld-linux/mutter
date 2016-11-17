@@ -8,33 +8,37 @@ Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.22/%{name}-%{version}.tar.xz
 # Source0-md5:	d081fc259aaa171f0b8f1aea855217ac
 URL:		http://git.gnome.org/cgit/mutter
+BuildRequires:	EGL-devel
+BuildRequires:	OpenGL-GLX-devel
 BuildRequires:	Mesa-libgbm-devel >= 10.3
-BuildRequires:	autoconf >= 2.62
+BuildRequires:	Mesa-libwayland-egl-devel
+BuildRequires:	atk-devel >= 1:2.6
+BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10.0
-BuildRequires:	gdk-pixbuf2-devel
-BuildRequires:	gettext-tools
+BuildRequires:	cairo-gobject-devel >= 1.14.0
+BuildRequires:	gdk-pixbuf2-devel >= 2.0
+BuildRequires:	gettext-tools >= 0.19.6
 BuildRequires:	glib2-devel >= 1:2.50.0
-BuildRequires:	gnome-common
 BuildRequires:	gnome-desktop-devel >= 3.0
-BuildRequires:	gobject-introspection-devel >= 0.10.0
+BuildRequires:	gobject-introspection-devel >= 1.40.0
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.22.0
 BuildRequires:	gtk+3-devel >= 3.20.0
-BuildRequires:	json-glib-devel
+BuildRequires:	json-glib-devel >= 0.12.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libdrm-devel
-BuildRequires:	libinput-devel
+BuildRequires:	libinput-devel >= 1.4.0
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libwacom-devel >= 0.13
-# xcb-randr
+# xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
-BuildRequires:	pango-devel >= 1:1.2.0
+BuildRequires:	pango-devel >= 1:1.30
 BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	rpmbuild(macros) >= 1.98
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
-BuildRequires:	udev-glib-devel
+BuildRequires:	udev-glib-devel >= 136
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.6.90
 BuildRequires:	wayland-protocols >= 1.7
@@ -42,11 +46,11 @@ BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xorg-lib-libX11-devel
-BuildRequires:	xorg-lib-libXcomposite-devel >= 0.2
+BuildRequires:	xorg-lib-libXcomposite-devel >= 0.4
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
-BuildRequires:	xorg-lib-libXfixes-devel
+BuildRequires:	xorg-lib-libXfixes-devel >= 3
 BuildRequires:	xorg-lib-libXi-devel >= 1.7
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.5.0
@@ -55,7 +59,7 @@ BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbcommon-x11-devel
 BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.35.1
+Requires(post,postun):	glib2 >= 1:2.50.0
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gsettings-desktop-schemas >= 3.22.0
 Requires:	zenity
@@ -82,16 +86,25 @@ Summary:	Mutter shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
 Requires:	Mesa-libgbm >= 10.3
+Requires:	atk >= 1:2.6
 Requires:	cairo >= 1.10.0
+Requires:	cairo-gobject >= 1.14.0
 Requires:	glib2 >= 1:2.50.0
 Requires:	gnome-desktop >= 3.0
 Requires:	gtk+3 >= 3.20.0
+Requires:	json-glib >= 0.12.0
 Requires:	libcanberra-gtk3 >= 0.26
+Requires:	libinput >= 1.4.0
+Requires:	libwacom >= 0.13
+Requires:	pango >= 1:1.30
 Requires:	startup-notification >= 0.7
+Requires:	udev-glib >= 136
 Requires:	upower-libs >= 0.99.0
 Requires:	wayland >= 1.6.90
-Requires:	xorg-lib-libXcomposite >= 0.2
+Requires:	xorg-lib-libXcomposite >= 0.4
+Requires:	xorg-lib-libXfixes >= 3
 Requires:	xorg-lib-libXi >= 1.7
+Requires:	xorg-lib-libXrandr >= 1.5.0
 Obsoletes:	mutter-wayland-libs < 3.14
 Conflicts:	mutter < 3.4.0-2
 
@@ -106,16 +119,28 @@ Summary:	Development package for Mutter
 Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	EGL-devel
+Requires:	Mesa-libgbm-devel >= 10.3
+Requires:	Mesa-libwayland-egl-devel
 Requires:	cairo-devel >= 1.10.0
+Requires:	cairo-gobject-devel >= 1.14.0
+Requires:	gdk-pixbuf2-devel >= 2.0
 Requires:	glib2-devel >= 1:2.50.0
 Requires:	gtk+3-devel >= 3.20.0
 Requires:	libcanberra-gtk3-devel >= 0.26
+Requires:	libdrm-devel
 Requires:	startup-notification-devel >= 0.7
-Requires:	xorg-lib-libXcomposite-devel >= 0.2
+Requires:	wayland-devel >= 1.6.90
+Requires:	xorg-lib-libX11-devel
+Requires:	xorg-lib-libXcomposite-devel >= 0.4
 Requires:	xorg-lib-libXcursor-devel
 Requires:	xorg-lib-libXdamage-devel
-Requires:	xorg-lib-libXfixes-devel
+Requires:	xorg-lib-libXext-devel
+Requires:	xorg-lib-libXfixes-devel >= 3
+Requires:	xorg-lib-libXi-devel >= 1.7
+Requires:	xorg-lib-libXrandr-devel >= 1.5.0
 Requires:	xorg-lib-libXrender-devel
+Requires:	xorg-lib-libxkbcommon-devel
 Obsoletes:	mutter-wayland-devel < 3.14
 
 %description devel
@@ -214,4 +239,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/mutter-cogl-1.0.pc
 %{_pkgconfigdir}/mutter-cogl-pango-1.0.pc
 %{_pkgconfigdir}/mutter-cogl-path-1.0.pc
-
