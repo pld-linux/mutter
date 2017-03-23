@@ -1,12 +1,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.22.3
+Version:	3.24.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.22/%{name}-%{version}.tar.xz
-# Source0-md5:	e1b0d199ed1165916aaeedc013b41489
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.24/%{name}-%{version}.tar.xz
+# Source0-md5:	69f58ea24c02d42c87d4e072ed2b8319
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
@@ -207,13 +207,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmutter.so.0
+%attr(755,root,root) %{_libdir}/libmutter-0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmutter-0.so.0
 %dir %{_libdir}/mutter
-%attr(755,root,root) %{_libdir}/mutter/libmutter-clutter-1.0.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-pango.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-path.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-clutter-0.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-pango-0.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-path-0.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-0.so
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Cally-*.typelib
 %{_libdir}/mutter/Clutter-*.typelib
@@ -224,7 +224,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter.so
+%attr(755,root,root) %{_libdir}/libmutter-0.so
 %{_includedir}/mutter
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Cally-*.gir
@@ -233,9 +233,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mutter/Cogl-*.gir
 %{_libdir}/mutter/CoglPango-*.gir
 %{_libdir}/mutter/Meta-*.gir
-%{_pkgconfigdir}/libmutter.pc
-%{_pkgconfigdir}/mutter-clutter-1.0.pc
-%{_pkgconfigdir}/mutter-clutter-x11-1.0.pc
-%{_pkgconfigdir}/mutter-cogl-1.0.pc
-%{_pkgconfigdir}/mutter-cogl-pango-1.0.pc
-%{_pkgconfigdir}/mutter-cogl-path-1.0.pc
+%{_pkgconfigdir}/libmutter-0.pc
+%{_pkgconfigdir}/mutter-clutter-0.pc
+%{_pkgconfigdir}/mutter-clutter-x11-0.pc
+%{_pkgconfigdir}/mutter-cogl-0.pc
+%{_pkgconfigdir}/mutter-cogl-pango-0.pc
+%{_pkgconfigdir}/mutter-cogl-path-0.pc
