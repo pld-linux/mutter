@@ -38,7 +38,7 @@ BuildRequires:	rpmbuild(macros) >= 1.98
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
-BuildRequires:	libgudev >= 232
+BuildRequires:	libgudev-devel >= 232
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.6.90
 BuildRequires:	wayland-protocols >= 1.7
