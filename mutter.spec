@@ -38,7 +38,7 @@ BuildRequires:	rpmbuild(macros) >= 1.98
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
-BuildRequires:	udev-glib-devel >= 136
+BuildRequires:	libgudev >= 232
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.6.90
 BuildRequires:	wayland-protocols >= 1.7
@@ -98,7 +98,7 @@ Requires:	libinput >= 1.4.0
 Requires:	libwacom >= 0.13
 Requires:	pango >= 1:1.30
 Requires:	startup-notification >= 0.7
-Requires:	udev-glib >= 136
+Requires:	libgudev >= 232
 Requires:	upower-libs >= 0.99.0
 Requires:	wayland >= 1.6.90
 Requires:	xorg-lib-libXcomposite >= 0.4
