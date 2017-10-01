@@ -207,13 +207,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmutter-0.so.0
+%attr(755,root,root) %{_libdir}/libmutter-1.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmutter-1.so.0
 %dir %{_libdir}/mutter
-%attr(755,root,root) %{_libdir}/mutter/libmutter-clutter-0.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-pango-0.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-path-0.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-0.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-clutter-1.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-pango-1.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-path-1.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-1.so
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Cally-*.typelib
 %{_libdir}/mutter/Clutter-*.typelib
@@ -224,7 +224,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-0.so
+%attr(755,root,root) %{_libdir}/libmutter-1.so
 %{_includedir}/mutter
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Cally-*.gir
@@ -233,9 +233,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mutter/Cogl-*.gir
 %{_libdir}/mutter/CoglPango-*.gir
 %{_libdir}/mutter/Meta-*.gir
-%{_pkgconfigdir}/libmutter-0.pc
-%{_pkgconfigdir}/mutter-clutter-0.pc
-%{_pkgconfigdir}/mutter-clutter-x11-0.pc
-%{_pkgconfigdir}/mutter-cogl-0.pc
-%{_pkgconfigdir}/mutter-cogl-pango-0.pc
-%{_pkgconfigdir}/mutter-cogl-path-0.pc
+%{_pkgconfigdir}/libmutter-1.pc
+%{_pkgconfigdir}/mutter-clutter-1.pc
+%{_pkgconfigdir}/mutter-clutter-x11-1.pc
+%{_pkgconfigdir}/mutter-cogl-1.pc
+%{_pkgconfigdir}/mutter-cogl-pango-1.pc
+%{_pkgconfigdir}/mutter-cogl-path-1.pc
