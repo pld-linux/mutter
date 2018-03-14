@@ -1,12 +1,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.26.0
+Version:	3.28.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.26/%{name}-%{version}.tar.xz
-# Source0-md5:	b821221e98ae640c98b29ba7fa033628
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.28/%{name}-%{version}.tar.xz
+# Source0-md5:	7a3baf2fbb02f9cc341bf0424a31d0d2
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
@@ -40,7 +40,7 @@ BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	libgudev-devel >= 232
 BuildRequires:	upower-devel >= 0.99.0
-BuildRequires:	wayland-devel >= 1.6.90
+BuildRequires:	wayland-devel >= 1.13.0
 BuildRequires:	wayland-protocols >= 1.7
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
@@ -100,7 +100,7 @@ Requires:	pango >= 1:1.30
 Requires:	startup-notification >= 0.7
 Requires:	libgudev >= 232
 Requires:	upower-libs >= 0.99.0
-Requires:	wayland >= 1.6.90
+Requires:	wayland >= 1.13.0
 Requires:	xorg-lib-libXcomposite >= 0.4
 Requires:	xorg-lib-libXfixes >= 3
 Requires:	xorg-lib-libXi >= 1.7
@@ -200,6 +200,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/GConf/gsettings/mutter-schemas.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.wayland.gschema.xml
+%{_datadir}/gnome-control-center/keybindings/50-mutter-wayland.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-windows.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-navigation.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-system.xml
@@ -207,13 +208,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-1.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmutter-1.so.0
+%attr(755,root,root) %{_libdir}/libmutter-2.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmutter-2.so.0
 %dir %{_libdir}/mutter
-%attr(755,root,root) %{_libdir}/mutter/libmutter-clutter-1.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-pango-1.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-path-1.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-1.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-clutter-2.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-pango-2.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-path-2.so
+%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-2.so
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Cally-*.typelib
 %{_libdir}/mutter/Clutter-*.typelib
@@ -224,7 +225,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-1.so
+%attr(755,root,root) %{_libdir}/libmutter-2.so
 %{_includedir}/mutter
 # intentionally installed in package-private dir
 %{_libdir}/mutter/Cally-*.gir
@@ -233,9 +234,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mutter/Cogl-*.gir
 %{_libdir}/mutter/CoglPango-*.gir
 %{_libdir}/mutter/Meta-*.gir
-%{_pkgconfigdir}/libmutter-1.pc
-%{_pkgconfigdir}/mutter-clutter-1.pc
-%{_pkgconfigdir}/mutter-clutter-x11-1.pc
-%{_pkgconfigdir}/mutter-cogl-1.pc
-%{_pkgconfigdir}/mutter-cogl-pango-1.pc
-%{_pkgconfigdir}/mutter-cogl-path-1.pc
+%{_pkgconfigdir}/libmutter-2.pc
+%{_pkgconfigdir}/mutter-clutter-2.pc
+%{_pkgconfigdir}/mutter-clutter-x11-2.pc
+%{_pkgconfigdir}/mutter-cogl-2.pc
+%{_pkgconfigdir}/mutter-cogl-pango-2.pc
+%{_pkgconfigdir}/mutter-cogl-path-2.pc
