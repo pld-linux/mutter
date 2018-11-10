@@ -2,7 +2,7 @@ Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
 Version:	3.28.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.28/%{name}-%{version}.tar.xz
@@ -11,7 +11,6 @@ URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
 BuildRequires:	Mesa-libgbm-devel >= 10.3
-BuildRequires:	Mesa-libwayland-egl-devel
 BuildRequires:	atk-devel >= 1:2.6
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.11
@@ -41,6 +40,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	libgudev-devel >= 232
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.13.0
+BuildRequires:	wayland-egl-devel
 BuildRequires:	wayland-protocols >= 1.7
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
@@ -121,7 +121,6 @@ Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	EGL-devel
 Requires:	Mesa-libgbm-devel >= 10.3
-Requires:	Mesa-libwayland-egl-devel
 Requires:	cairo-devel >= 1.10.0
 Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.0
@@ -131,6 +130,7 @@ Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	libdrm-devel
 Requires:	startup-notification-devel >= 0.7
 Requires:	wayland-devel >= 1.6.90
+Requires:	wayland-egl-devel
 Requires:	xorg-lib-libX11-devel
 Requires:	xorg-lib-libXcomposite-devel >= 0.4
 Requires:	xorg-lib-libXcursor-devel
