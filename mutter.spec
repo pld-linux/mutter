@@ -1,27 +1,26 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.30.2
+Version:	3.32.2
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.30/%{name}-%{version}.tar.xz
-# Source0-md5:	d74b9bf421b2b82ebfe11cccc055a760
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.32/%{name}-%{version}.tar.xz
+# Source0-md5:	283c54e0f8a37dc54b99a1de0e0b2a2e
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
 BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	atk-devel >= 1:2.6
-BuildRequires:	autoconf >= 2.63
-BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	cairo-gobject-devel >= 1.14.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	gettext-tools >= 0.19.6
 BuildRequires:	glib2-devel >= 1:2.50.0
 BuildRequires:	gnome-desktop-devel >= 3.0
+BuildRequires:	gnome-settings-daemon-devel
 BuildRequires:	gobject-introspection-devel >= 1.40.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.22.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.32.0
 BuildRequires:	gtk+3-devel >= 3.20.0
 BuildRequires:	json-glib-devel >= 0.12.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
@@ -31,9 +30,11 @@ BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
+BuildRequires:	meson >= 0.48.0
+BuildRequires:	ninja
 BuildRequires:	pango-devel >= 1:1.30
 BuildRequires:	pkgconfig >= 1:0.21
-BuildRequires:	rpmbuild(macros) >= 1.98
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
@@ -58,10 +59,11 @@ BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbcommon-x11-devel
 BuildRequires:	xorg-lib-libxkbfile-devel
+BuildRequires:	xorg-xserver-Xwayland
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.50.0
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gsettings-desktop-schemas >= 3.22.0
+Requires:	gsettings-desktop-schemas >= 3.32.0
 Requires:	zenity
 Provides:	gnome-wm
 Obsoletes:	mutter-apidocs < 3.18
@@ -154,26 +156,15 @@ Mutter.
 %setup -q
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	ZENITY=/usr/bin/zenity \
-	--enable-compile-warnings=maximum \
-	--disable-silent-rules \
-	--disable-static
-%{__make}
+%meson build \
+	-Dinstalled_tests=false \
+	-Dremote_desktop=false
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/mutter/*.la
+%ninja_install -C build
 
 %find_lang %{name}
 
@@ -193,8 +184,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS doc/*.txt
 %attr(755,root,root) %{_bindir}/mutter
-%dir %{_libdir}/mutter/plugins
-%attr(755,root,root) %{_libdir}/mutter/plugins/default.so
+%dir %{_libdir}/mutter-4/plugins
+%attr(755,root,root) %{_libdir}/mutter-4/plugins/libdefault.so
 %attr(755,root,root) %{_libexecdir}/mutter-restart-helper
 %{_desktopdir}/mutter.desktop
 %{_datadir}/GConf/gsettings/mutter-schemas.convert
@@ -208,35 +199,47 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-3.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmutter-3.so.0
-%dir %{_libdir}/mutter
-%attr(755,root,root) %{_libdir}/mutter/libmutter-clutter-3.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-pango-3.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-path-3.so
-%attr(755,root,root) %{_libdir}/mutter/libmutter-cogl-3.so
+%attr(755,root,root) %{_libdir}/libmutter-4.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmutter-4.so.0
+%dir %{_libdir}/mutter-4
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-clutter-4.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-clutter-4.so.0
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-gles2-4.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-gles2-4.so.0
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-pango-4.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-pango-4.so.0
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-path-4.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-path-4.so.0
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-4.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-4.so.0
 # intentionally installed in package-private dir
-%{_libdir}/mutter/Cally-*.typelib
-%{_libdir}/mutter/Clutter-*.typelib
-%{_libdir}/mutter/ClutterX11-*.typelib
-%{_libdir}/mutter/Cogl-*.typelib
-%{_libdir}/mutter/CoglPango-*.typelib
-%{_libdir}/mutter/Meta-*.typelib
+%{_libdir}/mutter-4/Cally-*.typelib
+%{_libdir}/mutter-4/Clutter-*.typelib
+%{_libdir}/mutter-4/ClutterX11-*.typelib
+%{_libdir}/mutter-4/Cogl-*.typelib
+%{_libdir}/mutter-4/CoglPango-*.typelib
+%{_libdir}/mutter-4/Meta-*.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-3.so
-%{_includedir}/mutter
+%attr(755,root,root) %{_libdir}/libmutter-4.so
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-clutter-4.so
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-gles2-4.so
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-pango-4.so
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-path-4.so
+%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-4.so
+%{_includedir}/mutter-4
 # intentionally installed in package-private dir
-%{_libdir}/mutter/Cally-*.gir
-%{_libdir}/mutter/Clutter-*.gir
-%{_libdir}/mutter/ClutterX11-*.gir
-%{_libdir}/mutter/Cogl-*.gir
-%{_libdir}/mutter/CoglPango-*.gir
-%{_libdir}/mutter/Meta-*.gir
-%{_pkgconfigdir}/libmutter-3.pc
-%{_pkgconfigdir}/mutter-clutter-3.pc
-%{_pkgconfigdir}/mutter-clutter-x11-3.pc
-%{_pkgconfigdir}/mutter-cogl-3.pc
-%{_pkgconfigdir}/mutter-cogl-pango-3.pc
-%{_pkgconfigdir}/mutter-cogl-path-3.pc
+%{_libdir}/mutter-4/Cally-*.gir
+%{_libdir}/mutter-4/Clutter-*.gir
+%{_libdir}/mutter-4/ClutterX11-*.gir
+%{_libdir}/mutter-4/Cogl-*.gir
+%{_libdir}/mutter-4/CoglPango-*.gir
+%{_libdir}/mutter-4/Meta-*.gir
+%{_pkgconfigdir}/libmutter-4.pc
+%{_pkgconfigdir}/mutter-clutter-4.pc
+%{_pkgconfigdir}/mutter-clutter-x11-4.pc
+%{_pkgconfigdir}/mutter-cogl-4.pc
+%{_pkgconfigdir}/mutter-cogl-gles2-4.pc
+%{_pkgconfigdir}/mutter-cogl-pango-4.pc
+%{_pkgconfigdir}/mutter-cogl-path-4.pc
