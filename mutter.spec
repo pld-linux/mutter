@@ -1,3 +1,4 @@
+# TODO: remote_desktop, BR: libpipewire >= 0.2.5
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
@@ -16,7 +17,7 @@ BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	cairo-gobject-devel >= 1.14.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	gettext-tools >= 0.19.6
-BuildRequires:	glib2-devel >= 1:2.50.0
+BuildRequires:	glib2-devel >= 1:2.53.2
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gnome-settings-daemon-devel
 BuildRequires:	gobject-introspection-devel >= 1.40.0
@@ -25,24 +26,24 @@ BuildRequires:	gtk+3-devel >= 3.20.0
 BuildRequires:	json-glib-devel >= 0.12.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libdrm-devel
+BuildRequires:	libgudev-devel >= 232
 BuildRequires:	libinput-devel >= 1.4.0
-BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
 BuildRequires:	meson >= 0.48.0
-BuildRequires:	ninja
+BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.30
 BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
-BuildRequires:	libgudev-devel >= 232
+BuildRequires:	udev-devel >= 1:228
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.13.0
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.7
+BuildRequires:	wayland-protocols >= 1.16
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
@@ -57,11 +58,10 @@ BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.5.0
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.3
-BuildRequires:	xorg-lib-libxkbcommon-x11-devel
+BuildRequires:	xorg-lib-libxkbcommon-x11-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbfile-devel
-BuildRequires:	xorg-xserver-Xwayland
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.50.0
+Requires(post,postun):	glib2 >= 1:2.53.2
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gsettings-desktop-schemas >= 3.32.0
 Requires:	zenity
@@ -91,7 +91,7 @@ Requires:	Mesa-libgbm >= 10.3
 Requires:	atk >= 1:2.6
 Requires:	cairo >= 1.10.0
 Requires:	cairo-gobject >= 1.14.0
-Requires:	glib2 >= 1:2.50.0
+Requires:	glib2 >= 1:2.53.2
 Requires:	gnome-desktop >= 3.0
 Requires:	gtk+3 >= 3.20.0
 Requires:	json-glib >= 0.12.0
@@ -126,7 +126,7 @@ Requires:	Mesa-libgbm-devel >= 10.3
 Requires:	cairo-devel >= 1.10.0
 Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.0
-Requires:	glib2-devel >= 1:2.50.0
+Requires:	glib2-devel >= 1:2.53.2
 Requires:	gtk+3-devel >= 3.20.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	libdrm-devel
@@ -142,7 +142,7 @@ Requires:	xorg-lib-libXfixes-devel >= 3
 Requires:	xorg-lib-libXi-devel >= 1.7
 Requires:	xorg-lib-libXrandr-devel >= 1.5.0
 Requires:	xorg-lib-libXrender-devel
-Requires:	xorg-lib-libxkbcommon-devel
+Requires:	xorg-lib-libxkbcommon-devel >= 0.4.3
 Obsoletes:	mutter-wayland-devel < 3.14
 
 %description devel
@@ -158,7 +158,9 @@ Mutter.
 %build
 %meson build \
 	-Dinstalled_tests=false \
-	-Dremote_desktop=false
+	-Dremote_desktop=false \
+	-Dxwayland_path=/usr/bin/Xwayland
+
 %ninja_build -C build
 
 %install
