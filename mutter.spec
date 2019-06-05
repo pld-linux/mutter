@@ -1,4 +1,7 @@
-# TODO: remote_desktop, BR: libpipewire >= 0.2.5
+#
+# Conditional build
+%bcond_without	pipewire	# remote desktop via pipewire
+
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
@@ -34,6 +37,7 @@ BuildRequires:	libxcb-devel
 BuildRequires:	meson >= 0.48.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.30
+%{?with_pipewire:BuildRequires:	pipewire-devel >= 0.2.5}
 BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	startup-notification-devel >= 0.7
@@ -99,6 +103,7 @@ Requires:	libcanberra-gtk3 >= 0.26
 Requires:	libinput >= 1.4.0
 Requires:	libwacom >= 0.13
 Requires:	pango >= 1:1.30
+%{?with_pipewire:Requires:	pipewire-libs >= 0.2.5}
 Requires:	startup-notification >= 0.7
 Requires:	libgudev >= 232
 Requires:	upower-libs >= 0.99.0
@@ -158,7 +163,7 @@ Mutter.
 %build
 %meson build \
 	-Dinstalled_tests=false \
-	-Dremote_desktop=false \
+	%{!?with_pipewire:-Dremote_desktop=false} \
 	-Dxwayland_path=/usr/bin/Xwayland
 
 %ninja_build -C build
