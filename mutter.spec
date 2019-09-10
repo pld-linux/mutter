@@ -1,16 +1,17 @@
 #
 # Conditional build
 %bcond_without	pipewire	# remote desktop via pipewire
+%bcond_with	sysprof		# build with tracing support
 
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.32.2
+Version:	3.34.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.32/%{name}-%{version}.tar.xz
-# Source0-md5:	283c54e0f8a37dc54b99a1de0e0b2a2e
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.34/%{name}-%{version}.tar.xz
+# Source0-md5:	9c67e9ef7641031e0b16cf88766335d5
 URL:		http://git.gnome.org/cgit/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
@@ -20,11 +21,11 @@ BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	cairo-gobject-devel >= 1.14.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	gettext-tools >= 0.19.6
-BuildRequires:	glib2-devel >= 1:2.53.2
+BuildRequires:	glib2-devel >= 1:2.61.1
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gnome-settings-daemon-devel
 BuildRequires:	gobject-introspection-devel >= 1.40.0
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.32.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.33.0
 BuildRequires:	gtk+3-devel >= 3.20.0
 BuildRequires:	json-glib-devel >= 0.12.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
@@ -34,40 +35,43 @@ BuildRequires:	libinput-devel >= 1.4.0
 BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
-BuildRequires:	meson >= 0.48.0
+BuildRequires:	meson >= 0.50.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.30
 %{?with_pipewire:BuildRequires:	pipewire-devel >= 0.2.5}
 BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	startup-notification-devel >= 0.7
+%{?with_sysprof:BuildRequires:	sysprof-devel >= 3.34.0}
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel >= 1:228
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.13.0
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.16
+BuildRequires:	wayland-protocols >= 1.18
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXau-devel
 BuildRequires:	xorg-lib-libXcomposite-devel >= 0.4
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel >= 3
-BuildRequires:	xorg-lib-libXi-devel >= 1.7
+BuildRequires:	xorg-lib-libXi-devel >= 1.7.4
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.5.0
 BuildRequires:	xorg-lib-libXrender-devel
+BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbcommon-x11-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.53.2
+Requires(post,postun):	glib2 >= 1:2.61.1
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gsettings-desktop-schemas >= 3.32.0
+Requires:	gsettings-desktop-schemas >= 3.33.0
 Requires:	zenity
 Provides:	gnome-wm
 Obsoletes:	mutter-apidocs < 3.18
@@ -95,7 +99,7 @@ Requires:	Mesa-libgbm >= 10.3
 Requires:	atk >= 1:2.6
 Requires:	cairo >= 1.10.0
 Requires:	cairo-gobject >= 1.14.0
-Requires:	glib2 >= 1:2.53.2
+Requires:	glib2 >= 1:2.61.1
 Requires:	gnome-desktop >= 3.0
 Requires:	gtk+3 >= 3.20.0
 Requires:	json-glib >= 0.12.0
@@ -110,7 +114,7 @@ Requires:	upower-libs >= 0.99.0
 Requires:	wayland >= 1.13.0
 Requires:	xorg-lib-libXcomposite >= 0.4
 Requires:	xorg-lib-libXfixes >= 3
-Requires:	xorg-lib-libXi >= 1.7
+Requires:	xorg-lib-libXi >= 1.7.4
 Requires:	xorg-lib-libXrandr >= 1.5.0
 Obsoletes:	mutter-wayland-libs < 3.14
 Conflicts:	mutter < 3.4.0-2
@@ -131,7 +135,7 @@ Requires:	Mesa-libgbm-devel >= 10.3
 Requires:	cairo-devel >= 1.10.0
 Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.0
-Requires:	glib2-devel >= 1:2.53.2
+Requires:	glib2-devel >= 1:2.61.1
 Requires:	gtk+3-devel >= 3.20.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	libdrm-devel
@@ -139,14 +143,16 @@ Requires:	startup-notification-devel >= 0.7
 Requires:	wayland-devel >= 1.6.90
 Requires:	wayland-egl-devel
 Requires:	xorg-lib-libX11-devel
+Requires:	xorg-lib-libXau-devel
 Requires:	xorg-lib-libXcomposite-devel >= 0.4
 Requires:	xorg-lib-libXcursor-devel
 Requires:	xorg-lib-libXdamage-devel
 Requires:	xorg-lib-libXext-devel
 Requires:	xorg-lib-libXfixes-devel >= 3
-Requires:	xorg-lib-libXi-devel >= 1.7
+Requires:	xorg-lib-libXi-devel >= 1.7.4
 Requires:	xorg-lib-libXrandr-devel >= 1.5.0
 Requires:	xorg-lib-libXrender-devel
+Requires:	xorg-lib-libXtst-devel
 Requires:	xorg-lib-libxkbcommon-devel >= 0.4.3
 Obsoletes:	mutter-wayland-devel < 3.14
 
@@ -163,6 +169,7 @@ Mutter.
 %build
 %meson build \
 	-Dinstalled_tests=false \
+	-Dprofiler=%{__true_false sysprof} \
 	%{!?with_pipewire:-Dremote_desktop=false} \
 	-Dxwayland_path=/usr/bin/Xwayland
 
@@ -191,8 +198,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS doc/*.txt
 %attr(755,root,root) %{_bindir}/mutter
-%dir %{_libdir}/mutter-4/plugins
-%attr(755,root,root) %{_libdir}/mutter-4/plugins/libdefault.so
+%dir %{_libdir}/mutter-5/plugins
+%attr(755,root,root) %{_libdir}/mutter-5/plugins/libdefault.so
 %attr(755,root,root) %{_libexecdir}/mutter-restart-helper
 %{_desktopdir}/mutter.desktop
 %{_datadir}/GConf/gsettings/mutter-schemas.convert
@@ -206,47 +213,43 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-4.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmutter-4.so.0
-%dir %{_libdir}/mutter-4
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-clutter-4.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-clutter-4.so.0
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-gles2-4.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-gles2-4.so.0
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-pango-4.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-pango-4.so.0
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-path-4.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-path-4.so.0
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-4.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-4.so.0
+%attr(755,root,root) %{_libdir}/libmutter-5.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmutter-5.so.0
+%dir %{_libdir}/mutter-5
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-clutter-5.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-clutter-5.so.0
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-pango-5.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-pango-5.so.0
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-path-5.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-path-5.so.0
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-5.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-5.so.0
 # intentionally installed in package-private dir
-%{_libdir}/mutter-4/Cally-*.typelib
-%{_libdir}/mutter-4/Clutter-*.typelib
-%{_libdir}/mutter-4/ClutterX11-*.typelib
-%{_libdir}/mutter-4/Cogl-*.typelib
-%{_libdir}/mutter-4/CoglPango-*.typelib
-%{_libdir}/mutter-4/Meta-*.typelib
+%{_libdir}/mutter-5/Cally-*.typelib
+%{_libdir}/mutter-5/Clutter-*.typelib
+%{_libdir}/mutter-5/ClutterX11-*.typelib
+%{_libdir}/mutter-5/Cogl-*.typelib
+%{_libdir}/mutter-5/CoglPango-*.typelib
+%{_libdir}/mutter-5/Meta-*.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-4.so
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-clutter-4.so
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-gles2-4.so
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-pango-4.so
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-path-4.so
-%attr(755,root,root) %{_libdir}/mutter-4/libmutter-cogl-4.so
-%{_includedir}/mutter-4
+%attr(755,root,root) %{_libdir}/libmutter-5.so
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-clutter-5.so
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-pango-5.so
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-path-5.so
+%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-5.so
+%{_includedir}/mutter-5
 # intentionally installed in package-private dir
-%{_libdir}/mutter-4/Cally-*.gir
-%{_libdir}/mutter-4/Clutter-*.gir
-%{_libdir}/mutter-4/ClutterX11-*.gir
-%{_libdir}/mutter-4/Cogl-*.gir
-%{_libdir}/mutter-4/CoglPango-*.gir
-%{_libdir}/mutter-4/Meta-*.gir
-%{_pkgconfigdir}/libmutter-4.pc
-%{_pkgconfigdir}/mutter-clutter-4.pc
-%{_pkgconfigdir}/mutter-clutter-x11-4.pc
-%{_pkgconfigdir}/mutter-cogl-4.pc
-%{_pkgconfigdir}/mutter-cogl-gles2-4.pc
-%{_pkgconfigdir}/mutter-cogl-pango-4.pc
-%{_pkgconfigdir}/mutter-cogl-path-4.pc
+%{_libdir}/mutter-5/Cally-*.gir
+%{_libdir}/mutter-5/Clutter-*.gir
+%{_libdir}/mutter-5/ClutterX11-*.gir
+%{_libdir}/mutter-5/Cogl-*.gir
+%{_libdir}/mutter-5/CoglPango-*.gir
+%{_libdir}/mutter-5/Meta-*.gir
+%{_pkgconfigdir}/libmutter-5.pc
+%{_pkgconfigdir}/mutter-clutter-5.pc
+%{_pkgconfigdir}/mutter-clutter-x11-5.pc
+%{_pkgconfigdir}/mutter-cogl-5.pc
+%{_pkgconfigdir}/mutter-cogl-pango-5.pc
+%{_pkgconfigdir}/mutter-cogl-path-5.pc
