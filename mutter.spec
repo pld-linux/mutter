@@ -12,13 +12,14 @@ License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.34/%{name}-%{version}.tar.xz
 # Source0-md5:	4d7b67471fa4177e5ff0357e1f1736fb
-URL:		http://git.gnome.org/cgit/mutter
+URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
 BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	atk-devel >= 1:2.6
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	cairo-gobject-devel >= 1.14.0
+BuildRequires:	fribidi-devel >= 1.0.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	gettext-tools >= 0.19.6
 BuildRequires:	glib2-devel >= 1:2.61.1
@@ -43,7 +44,8 @@ BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	startup-notification-devel >= 0.7
 %{?with_sysprof:BuildRequires:	sysprof-devel >= 3.34.0}
-BuildRequires:	systemd-devel
+# or elogind-devel
+BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel >= 1:228
 BuildRequires:	upower-devel >= 0.99.0
@@ -99,6 +101,7 @@ Requires:	Mesa-libgbm >= 10.3
 Requires:	atk >= 1:2.6
 Requires:	cairo >= 1.10.0
 Requires:	cairo-gobject >= 1.14.0
+Requires:	fribidi >= 1.0.0
 Requires:	glib2 >= 1:2.61.1
 Requires:	gnome-desktop >= 3.0
 Requires:	gtk+3 >= 3.20.0
@@ -110,6 +113,7 @@ Requires:	pango >= 1:1.30
 %{?with_pipewire:Requires:	pipewire-libs >= 0.2.5}
 Requires:	startup-notification >= 0.7
 Requires:	libgudev >= 232
+Requires:	udev-libs >= 1:228
 Requires:	upower-libs >= 0.99.0
 Requires:	wayland >= 1.13.0
 Requires:	xorg-lib-libXcomposite >= 0.4
@@ -168,6 +172,7 @@ Mutter.
 
 %build
 %meson build \
+	-Dgles2_libname=libGLESv2.so.2 \
 	-Dinstalled_tests=false \
 	-Dprofiler=%{__true_false sysprof} \
 	%{!?with_pipewire:-Dremote_desktop=false} \
