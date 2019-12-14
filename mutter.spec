@@ -2,12 +2,13 @@
 # Conditional build
 %bcond_without	pipewire	# remote desktop via pipewire
 %bcond_with	sysprof		# build with tracing support
+%bcond_with	tests		# run tests (causes infinite loop on builders)
 
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
 Version:	3.34.2
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.34/%{name}-%{version}.tar.xz
@@ -176,6 +177,7 @@ Mutter.
 	-Dinstalled_tests=false \
 	-Dprofiler=%{__true_false sysprof} \
 	%{!?with_pipewire:-Dremote_desktop=false} \
+	-Dtests=%{__true_false tests} \
 	-Dxwayland_path=/usr/bin/Xwayland
 
 %ninja_build -C build
