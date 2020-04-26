@@ -7,12 +7,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.34.4
+Version:	3.36.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.34/%{name}-%{version}.tar.xz
-# Source0-md5:	de19a6de98a2250dd7efdfca14359e39
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.36/%{name}-%{version}.tar.xz
+# Source0-md5:	af300762ac1ed9b431144b55f3f6c1eb
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
@@ -20,6 +20,7 @@ BuildRequires:	Mesa-libgbm-devel >= 10.3
 BuildRequires:	atk-devel >= 1:2.6
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	cairo-gobject-devel >= 1.14.0
+BuildRequires:	dbus-devel
 BuildRequires:	fribidi-devel >= 1.0.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	gettext-tools >= 0.19.6
@@ -27,24 +28,25 @@ BuildRequires:	glib2-devel >= 1:2.61.1
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gnome-settings-daemon-devel
 BuildRequires:	gobject-introspection-devel >= 1.40.0
+BuildRequires:	graphene-devel >= 1.9.3
 BuildRequires:	gsettings-desktop-schemas-devel >= 3.33.0
 BuildRequires:	gtk+3-devel >= 3.20.0
 BuildRequires:	json-glib-devel >= 0.12.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libdrm-devel
 BuildRequires:	libgudev-devel >= 232
-BuildRequires:	libinput-devel >= 1.4.0
+BuildRequires:	libinput-devel >= 1.7
 BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
 BuildRequires:	meson >= 0.50.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.30
-%{?with_pipewire:BuildRequires:	pipewire-devel >= 0.2.5}
+%{?with_pipewire:BuildRequires:	pipewire-devel >= 0.3.0}
 BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	startup-notification-devel >= 0.7
-%{?with_sysprof:BuildRequires:	sysprof-devel >= 3.34.0}
+%{?with_sysprof:BuildRequires:	sysprof-devel >= 3.35.2}
 # or elogind-devel
 BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	tar >= 1:1.22
@@ -52,7 +54,7 @@ BuildRequires:	udev-devel >= 1:228
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.13.0
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.18
+BuildRequires:	wayland-protocols >= 1.19
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
@@ -82,6 +84,8 @@ Obsoletes:	mutter-wayland < 3.14
 Obsoletes:	mutter-wayland-apidocs < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		apiver		6
+
 %description
 Mutter is a window and compositing manager that displays and manages
 your desktop via OpenGL. Mutter combines a sophisticated display
@@ -105,13 +109,14 @@ Requires:	cairo-gobject >= 1.14.0
 Requires:	fribidi >= 1.0.0
 Requires:	glib2 >= 1:2.61.1
 Requires:	gnome-desktop >= 3.0
+Requires:	graphene >= 1.9.3
 Requires:	gtk+3 >= 3.20.0
 Requires:	json-glib >= 0.12.0
 Requires:	libcanberra-gtk3 >= 0.26
-Requires:	libinput >= 1.4.0
+Requires:	libinput >= 1.7
 Requires:	libwacom >= 0.13
 Requires:	pango >= 1:1.30
-%{?with_pipewire:Requires:	pipewire-libs >= 0.2.5}
+%{?with_pipewire:Requires:	pipewire-libs >= 0.3.0}
 Requires:	startup-notification >= 0.7
 Requires:	libgudev >= 232
 Requires:	udev-libs >= 1:228
@@ -141,6 +146,7 @@ Requires:	cairo-devel >= 1.10.0
 Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.0
 Requires:	glib2-devel >= 1:2.61.1
+Requires:	graphene-devel >= 1.9.3
 Requires:	gtk+3-devel >= 3.20.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	libdrm-devel
@@ -178,6 +184,7 @@ Mutter.
 	-Dprofiler=%{__true_false sysprof} \
 	%{!?with_pipewire:-Dremote_desktop=false} \
 	-Dtests=%{__true_false tests} \
+	-Dxwayland_initfd=enabled \
 	-Dxwayland_path=/usr/bin/Xwayland
 
 %ninja_build -C build
@@ -205,8 +212,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS doc/*.txt
 %attr(755,root,root) %{_bindir}/mutter
-%dir %{_libdir}/mutter-5/plugins
-%attr(755,root,root) %{_libdir}/mutter-5/plugins/libdefault.so
+%dir %{_libdir}/mutter-%{apiver}/plugins
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/plugins/libdefault.so
 %attr(755,root,root) %{_libexecdir}/mutter-restart-helper
 %{_desktopdir}/mutter.desktop
 %{_datadir}/GConf/gsettings/mutter-schemas.convert
@@ -220,43 +227,43 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-5.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmutter-5.so.0
-%dir %{_libdir}/mutter-5
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-clutter-5.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-clutter-5.so.0
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-pango-5.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-pango-5.so.0
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-path-5.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-path-5.so.0
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-5.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-5.so.0
+%attr(755,root,root) %{_libdir}/libmutter-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmutter-%{apiver}.so.0
+%dir %{_libdir}/mutter-%{apiver}
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so.0
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-pango-%{apiver}.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-pango-%{apiver}.so.0
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-path-%{apiver}.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-path-%{apiver}.so.0
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.0
 # intentionally installed in package-private dir
-%{_libdir}/mutter-5/Cally-*.typelib
-%{_libdir}/mutter-5/Clutter-*.typelib
-%{_libdir}/mutter-5/ClutterX11-*.typelib
-%{_libdir}/mutter-5/Cogl-*.typelib
-%{_libdir}/mutter-5/CoglPango-*.typelib
-%{_libdir}/mutter-5/Meta-*.typelib
+%{_libdir}/mutter-%{apiver}/Cally-*.typelib
+%{_libdir}/mutter-%{apiver}/Clutter-*.typelib
+%{_libdir}/mutter-%{apiver}/ClutterX11-*.typelib
+%{_libdir}/mutter-%{apiver}/Cogl-*.typelib
+%{_libdir}/mutter-%{apiver}/CoglPango-*.typelib
+%{_libdir}/mutter-%{apiver}/Meta-*.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-5.so
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-clutter-5.so
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-pango-5.so
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-path-5.so
-%attr(755,root,root) %{_libdir}/mutter-5/libmutter-cogl-5.so
-%{_includedir}/mutter-5
+%attr(755,root,root) %{_libdir}/libmutter-%{apiver}.so
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-pango-%{apiver}.so
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-path-%{apiver}.so
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so
+%{_includedir}/mutter-%{apiver}
 # intentionally installed in package-private dir
-%{_libdir}/mutter-5/Cally-*.gir
-%{_libdir}/mutter-5/Clutter-*.gir
-%{_libdir}/mutter-5/ClutterX11-*.gir
-%{_libdir}/mutter-5/Cogl-*.gir
-%{_libdir}/mutter-5/CoglPango-*.gir
-%{_libdir}/mutter-5/Meta-*.gir
-%{_pkgconfigdir}/libmutter-5.pc
-%{_pkgconfigdir}/mutter-clutter-5.pc
-%{_pkgconfigdir}/mutter-clutter-x11-5.pc
-%{_pkgconfigdir}/mutter-cogl-5.pc
-%{_pkgconfigdir}/mutter-cogl-pango-5.pc
-%{_pkgconfigdir}/mutter-cogl-path-5.pc
+%{_libdir}/mutter-%{apiver}/Cally-*.gir
+%{_libdir}/mutter-%{apiver}/Clutter-*.gir
+%{_libdir}/mutter-%{apiver}/ClutterX11-*.gir
+%{_libdir}/mutter-%{apiver}/Cogl-*.gir
+%{_libdir}/mutter-%{apiver}/CoglPango-*.gir
+%{_libdir}/mutter-%{apiver}/Meta-*.gir
+%{_pkgconfigdir}/libmutter-%{apiver}.pc
+%{_pkgconfigdir}/mutter-clutter-%{apiver}.pc
+%{_pkgconfigdir}/mutter-clutter-x11-%{apiver}.pc
+%{_pkgconfigdir}/mutter-cogl-%{apiver}.pc
+%{_pkgconfigdir}/mutter-cogl-pango-%{apiver}.pc
+%{_pkgconfigdir}/mutter-cogl-path-%{apiver}.pc
