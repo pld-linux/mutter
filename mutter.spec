@@ -7,16 +7,16 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.36.6
+Version:	3.38.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.36/%{name}-%{version}.tar.xz
-# Source0-md5:	c841bbcc1a73ce632371172ee04730ae
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.38/%{name}-%{version}.tar.xz
+# Source0-md5:	5279ee0acb488f2be2806f25a2003ef4
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
-BuildRequires:	Mesa-libgbm-devel >= 10.3
+BuildRequires:	Mesa-libgbm-devel >= 17.3
 BuildRequires:	atk-devel >= 1:2.6
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	cairo-gobject-devel >= 1.14.0
@@ -29,7 +29,7 @@ BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gnome-settings-daemon-devel
 BuildRequires:	gobject-introspection-devel >= 1.40.0
 BuildRequires:	graphene-devel >= 1.9.3
-BuildRequires:	gsettings-desktop-schemas-devel >= 3.33.0
+BuildRequires:	gsettings-desktop-schemas-devel >= 3.37.2
 BuildRequires:	gtk+3-devel >= 3.20.0
 BuildRequires:	json-glib-devel >= 0.12.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
@@ -39,20 +39,20 @@ BuildRequires:	libinput-devel >= 1.7
 BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
-BuildRequires:	meson >= 0.50.0
+BuildRequires:	meson >= 0.51.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.30
 %{?with_pipewire:BuildRequires:	pipewire-devel >= 0.3.0}
 BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	startup-notification-devel >= 0.7
-%{?with_sysprof:BuildRequires:	sysprof-devel >= 3.35.2}
+%{?with_sysprof:BuildRequires:	sysprof-devel >= 3.37.2}
 # or elogind-devel
 BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel >= 1:228
 BuildRequires:	upower-devel >= 0.99.0
-BuildRequires:	wayland-devel >= 1.13.0
+BuildRequires:	wayland-devel >= 1.18
 BuildRequires:	wayland-egl-devel
 BuildRequires:	wayland-protocols >= 1.19
 BuildRequires:	xkeyboard-config
@@ -76,7 +76,7 @@ BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.61.1
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gsettings-desktop-schemas >= 3.33.0
+Requires:	gsettings-desktop-schemas >= 3.37.2
 Requires:	zenity
 Provides:	gnome-wm
 Obsoletes:	mutter-apidocs < 3.18
@@ -84,7 +84,7 @@ Obsoletes:	mutter-wayland < 3.14
 Obsoletes:	mutter-wayland-apidocs < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		apiver		6
+%define		apiver		7
 
 %description
 Mutter is a window and compositing manager that displays and manages
@@ -102,7 +102,7 @@ odziedziczoną z zarządcy okien Metacity.
 Summary:	Mutter shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
-Requires:	Mesa-libgbm >= 10.3
+Requires:	Mesa-libgbm >= 17.3
 Requires:	atk >= 1:2.6
 Requires:	cairo >= 1.10.0
 Requires:	cairo-gobject >= 1.14.0
@@ -121,7 +121,7 @@ Requires:	startup-notification >= 0.7
 Requires:	libgudev >= 232
 Requires:	udev-libs >= 1:228
 Requires:	upower-libs >= 0.99.0
-Requires:	wayland >= 1.13.0
+Requires:	wayland >= 1.18
 Requires:	xorg-lib-libXcomposite >= 0.4
 Requires:	xorg-lib-libXfixes >= 3
 Requires:	xorg-lib-libXi >= 1.7.4
@@ -141,7 +141,7 @@ Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	EGL-devel
-Requires:	Mesa-libgbm-devel >= 10.3
+Requires:	Mesa-libgbm-devel >= 17.3
 Requires:	cairo-devel >= 1.10.0
 Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.0
@@ -151,7 +151,7 @@ Requires:	gtk+3-devel >= 3.20.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	libdrm-devel
 Requires:	startup-notification-devel >= 0.7
-Requires:	wayland-devel >= 1.6.90
+Requires:	wayland-devel >= 1.8
 Requires:	wayland-egl-devel
 Requires:	xorg-lib-libX11-devel
 Requires:	xorg-lib-libXau-devel
@@ -234,8 +234,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so.0
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-pango-%{apiver}.so.*.*.*
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-pango-%{apiver}.so.0
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-path-%{apiver}.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-path-%{apiver}.so.0
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.*.*.*
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.0
 # intentionally installed in package-private dir
@@ -251,7 +249,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmutter-%{apiver}.so
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-pango-%{apiver}.so
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-path-%{apiver}.so
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so
 %{_includedir}/mutter-%{apiver}
 # intentionally installed in package-private dir
@@ -266,4 +263,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/mutter-clutter-x11-%{apiver}.pc
 %{_pkgconfigdir}/mutter-cogl-%{apiver}.pc
 %{_pkgconfigdir}/mutter-cogl-pango-%{apiver}.pc
-%{_pkgconfigdir}/mutter-cogl-path-%{apiver}.pc
