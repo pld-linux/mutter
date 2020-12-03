@@ -1,3 +1,4 @@
+# TODO: -Dxwayland_initfd=enabled when available in Xwayland release
 #
 # Conditional build
 %bcond_without	pipewire	# remote desktop via pipewire
@@ -7,12 +8,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	3.38.1
+Version:	3.38.2
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/mutter/3.38/%{name}-%{version}.tar.xz
-# Source0-md5:	df053c03ed2264e7b6dfd453ed5103ea
+Source0:	https://download.gnome.org/sources/mutter/3.38/%{name}-%{version}.tar.xz
+# Source0-md5:	07307571f9f2bdb433894741222773e1
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
@@ -184,7 +185,7 @@ Mutter.
 	-Dprofiler=%{__true_false sysprof} \
 	%{!?with_pipewire:-Dremote_desktop=false} \
 	-Dtests=%{__true_false tests} \
-	-Dxwayland_initfd=enabled \
+	-Dxwayland_initfd=disabled \
 	-Dxwayland_path=/usr/bin/Xwayland
 
 %ninja_build -C build
