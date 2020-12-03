@@ -14,6 +14,7 @@ License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	https://download.gnome.org/sources/mutter/3.38/%{name}-%{version}.tar.xz
 # Source0-md5:	07307571f9f2bdb433894741222773e1
+Patch0:		%{name}-no-xwayland.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
@@ -177,6 +178,7 @@ Mutter.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %meson build \

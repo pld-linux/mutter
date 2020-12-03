@@ -1,0 +1,18 @@
+--- mutter-3.38.2/meson.build.orig	2020-12-02 22:42:53.975304000 +0100
++++ mutter-3.38.2/meson.build	2020-12-03 21:29:37.119893722 +0100
+@@ -411,14 +411,11 @@
+ 
+   # For Xwayland -initfd usage
+   use_initfd = get_option('xwayland_initfd')
+-  xwayland_options = run_command(xwayland_path, '-help')
+   if use_initfd.auto()
++    xwayland_options = run_command(xwayland_path, '-help')
+     have_xwayland_initfd = xwayland_options.stderr().contains('-initfd')
+   else
+     have_xwayland_initfd = use_initfd.enabled()
+-    if have_xwayland_initfd and not xwayland_options.stderr().contains('-initfd')
+-      error('XWayland -initfd support requested but not available')
+-    endif
+   endif
+ 
+   if (have_xwayland_initfd)
