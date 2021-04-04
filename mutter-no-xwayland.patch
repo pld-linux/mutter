@@ -1,16 +1,28 @@
---- mutter-3.38.2/meson.build.orig	2020-12-02 22:42:53.975304000 +0100
-+++ mutter-3.38.2/meson.build	2020-12-03 21:29:37.119893722 +0100
-@@ -411,14 +411,11 @@
+--- mutter-40.0/meson.build.orig	2021-04-04 18:15:31.375227070 +0200
++++ mutter-40.0/meson.build	2021-04-04 18:55:31.768889688 +0200
+@@ -426,20 +426,17 @@
  
    # For Xwayland -initfd usage
    use_initfd = get_option('xwayland_initfd')
--  xwayland_options = run_command(xwayland_path, '-help')
+-  if xwayland_dep.found()
+-    xwayland_supports_initfd = xwayland_dep.get_pkgconfig_variable('have_initfd') == 'true'
+-  else
+-    xwayland_options = run_command(xwayland_path, '-help')
+-    xwayland_supports_initfd = xwayland_options.stderr().contains('-initfd')
+-  endif
+-
    if use_initfd.auto()
-+    xwayland_options = run_command(xwayland_path, '-help')
-     have_xwayland_initfd = xwayland_options.stderr().contains('-initfd')
++    if xwayland_dep.found()
++      xwayland_supports_initfd = xwayland_dep.get_pkgconfig_variable('have_initfd') == 'true'
++    else
++      xwayland_options = run_command(xwayland_path, '-help')
++      xwayland_supports_initfd = xwayland_options.stderr().contains('-initfd')
++    endif
++
+     have_xwayland_initfd = xwayland_supports_initfd
    else
      have_xwayland_initfd = use_initfd.enabled()
--    if have_xwayland_initfd and not xwayland_options.stderr().contains('-initfd')
+-    if have_xwayland_initfd and not xwayland_supports_initfd
 -      error('XWayland -initfd support requested but not available')
 -    endif
    endif
