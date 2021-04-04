@@ -16,6 +16,7 @@ Group:		X11/Window Managers
 Source0:	https://download.gnome.org/sources/mutter/40/%{name}-%{version}.tar.xz
 # Source0-md5:	64ec45c43427fa9794fc3a6e287689bd
 Patch0:		%{name}-no-xwayland.patch
+Patch1:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
@@ -181,6 +182,7 @@ Mutter.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %meson build \
