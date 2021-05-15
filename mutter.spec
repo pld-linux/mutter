@@ -1,4 +1,3 @@
-# TODO: use xorg-xserver-Xwayland-devel >= 21.1 instead of no-xwayland patch after finishing xorg-xserver-Xwayland.spec
 #
 # Conditional build
 %bcond_with	eglstream	# Wayland EGLStream support
@@ -15,8 +14,7 @@ License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	https://download.gnome.org/sources/mutter/40/%{name}-%{version}.tar.xz
 # Source0-md5:	84beb760caa91baad7838260593e488a
-Patch0:		%{name}-no-xwayland.patch
-Patch1:		%{name}-deps.patch
+Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLX-devel
@@ -78,6 +76,7 @@ BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbcommon-x11-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbfile-devel
+BuildRequires:	xorg-xserver-Xwayland-devel >= 21.1
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.67.3
 Requires:	%{name}-libs = %{version}-%{release}
@@ -182,7 +181,6 @@ Mutter.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %meson build \
@@ -192,7 +190,6 @@ Mutter.
 	-Dprofiler=%{__true_false sysprof} \
 	%{!?with_pipewire:-Dremote_desktop=false} \
 	-Dtests=%{__true_false tests} \
-	-Dxwayland_initfd=disabled \
 	-Dxwayland_path=/usr/bin/Xwayland
 
 %ninja_build -C build
