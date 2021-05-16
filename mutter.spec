@@ -77,6 +77,8 @@ BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbcommon-x11-devel >= 0.4.3
 BuildRequires:	xorg-lib-libxkbfile-devel
 BuildRequires:	xorg-xserver-Xwayland-devel >= 21.1
+# /usr/bin/cvt
+BuildRequires:	xorg-xserver-server-tools
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.67.3
 Requires:	%{name}-libs = %{version}-%{release}
