@@ -8,12 +8,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	40.4
+Version:	41.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	https://download.gnome.org/sources/mutter/40/%{name}-%{version}.tar.xz
-# Source0-md5:	bbfb54fba942b4f388e5b89759f2e9a6
+Source0:	https://download.gnome.org/sources/mutter/41/%{name}-%{version}.tar.xz
+# Source0-md5:	3eb959a4c8a192b3b535ee1b63941877
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
@@ -27,7 +27,7 @@ BuildRequires:	dbus-devel
 BuildRequires:	fribidi-devel >= 1.0.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	gettext-tools >= 0.19.6
-BuildRequires:	glib2-devel >= 1:2.67.3
+BuildRequires:	glib2-devel >= 1:2.69.0
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gnome-settings-daemon-devel
 BuildRequires:	gobject-introspection-devel >= 1.40.0
@@ -38,11 +38,11 @@ BuildRequires:	json-glib-devel >= 0.12.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libdrm-devel
 BuildRequires:	libgudev-devel >= 232
-BuildRequires:	libinput-devel >= 1.15.0
+BuildRequires:	libinput-devel >= 1.18.0
 BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
-BuildRequires:	meson >= 0.51.0
+BuildRequires:	meson >= 0.53.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.46.0
 %{?with_pipewire:BuildRequires:	pipewire-devel >= 0.3.21}
@@ -57,7 +57,7 @@ BuildRequires:	udev-devel >= 1:228
 BuildRequires:	upower-devel >= 0.99.0
 BuildRequires:	wayland-devel >= 1.18
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.19
+BuildRequires:	wayland-protocols >= 1.21
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
@@ -80,7 +80,7 @@ BuildRequires:	xorg-xserver-Xwayland-devel >= 21.1
 # /usr/bin/cvt
 BuildRequires:	xorg-xserver-server-tools
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.67.3
+Requires(post,postun):	glib2 >= 1:2.69.0
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gsettings-desktop-schemas >= 40
 Requires:	zenity
@@ -90,7 +90,7 @@ Obsoletes:	mutter-wayland < 3.14
 Obsoletes:	mutter-wayland-apidocs < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		apiver		8
+%define		apiver		9
 
 %description
 Mutter is a window and compositing manager that displays and manages
@@ -113,13 +113,13 @@ Requires:	atk >= 1:2.6
 Requires:	cairo >= 1.10.0
 Requires:	cairo-gobject >= 1.14.0
 Requires:	fribidi >= 1.0.0
-Requires:	glib2 >= 1:2.67.3
+Requires:	glib2 >= 1:2.69.0
 Requires:	gnome-desktop >= 3.0
 Requires:	graphene >= 1.10.2
 Requires:	gtk+3 >= 3.20.0
 Requires:	json-glib >= 0.12.0
 Requires:	libcanberra-gtk3 >= 0.26
-Requires:	libinput >= 1.15.0
+Requires:	libinput >= 1.18.0
 Requires:	libwacom >= 0.13
 Requires:	pango >= 1:1.46.0
 %{?with_pipewire:Requires:	pipewire-libs >= 0.3.21}
@@ -151,7 +151,7 @@ Requires:	Mesa-libgbm-devel >= 17.3
 Requires:	cairo-devel >= 1.10.0
 Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.0
-Requires:	glib2-devel >= 1:2.67.3
+Requires:	glib2-devel >= 1:2.69.0
 Requires:	graphene-devel >= 1.10.2
 Requires:	gtk+3-devel >= 3.20.0
 Requires:	libcanberra-gtk3-devel >= 0.26
@@ -186,6 +186,7 @@ Mutter.
 
 %build
 %meson build \
+	%{?with_eglstream:-Degl_device=true} \
 	%{?with_eglstream:-Dwayland_eglstream=true} \
 	-Dgles2_libname=libGLESv2.so.2 \
 	-Dinstalled_tests=false \
@@ -247,7 +248,6 @@ rm -rf $RPM_BUILD_ROOT
 # intentionally installed in package-private dir
 %{_libdir}/mutter-%{apiver}/Cally-%{apiver}.typelib
 %{_libdir}/mutter-%{apiver}/Clutter-%{apiver}.typelib
-%{_libdir}/mutter-%{apiver}/ClutterX11-%{apiver}.typelib
 %{_libdir}/mutter-%{apiver}/Cogl-%{apiver}.typelib
 %{_libdir}/mutter-%{apiver}/CoglPango-%{apiver}.typelib
 %{_libdir}/mutter-%{apiver}/Meta-%{apiver}.typelib
@@ -262,12 +262,10 @@ rm -rf $RPM_BUILD_ROOT
 # intentionally installed in package-private dir
 %{_libdir}/mutter-%{apiver}/Cally-%{apiver}.gir
 %{_libdir}/mutter-%{apiver}/Clutter-%{apiver}.gir
-%{_libdir}/mutter-%{apiver}/ClutterX11-%{apiver}.gir
 %{_libdir}/mutter-%{apiver}/Cogl-%{apiver}.gir
 %{_libdir}/mutter-%{apiver}/CoglPango-%{apiver}.gir
 %{_libdir}/mutter-%{apiver}/Meta-%{apiver}.gir
 %{_pkgconfigdir}/libmutter-%{apiver}.pc
 %{_pkgconfigdir}/mutter-clutter-%{apiver}.pc
-%{_pkgconfigdir}/mutter-clutter-x11-%{apiver}.pc
 %{_pkgconfigdir}/mutter-cogl-%{apiver}.pc
 %{_pkgconfigdir}/mutter-cogl-pango-%{apiver}.pc
