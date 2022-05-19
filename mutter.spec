@@ -3,17 +3,18 @@
 %bcond_with	eglstream	# Wayland EGLStream support
 %bcond_without	pipewire	# remote desktop via pipewire
 %bcond_with	sysprof		# build with tracing support
+%bcond_without	apidocs		# API documentation
 %bcond_with	tests		# run tests (causes infinite loop on builders)
 
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	41.4
+Version:	42.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	https://download.gnome.org/sources/mutter/41/%{name}-%{version}.tar.xz
-# Source0-md5:	49766d24a63cb9ca3f6bf20c188ca9a5
+Source0:	https://download.gnome.org/sources/mutter/42/%{name}-%{version}.tar.xz
+# Source0-md5:	59303bc585dd0e61632bf15440b6e343
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
@@ -27,6 +28,7 @@ BuildRequires:	dbus-devel
 BuildRequires:	fribidi-devel >= 1.0.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	gettext-tools >= 0.19.6
+%{?with_apidocs:BuildRequires:	gi-docgen >= 2021.1}
 BuildRequires:	glib2-devel >= 1:2.69.0
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gnome-settings-daemon-devel
@@ -38,14 +40,14 @@ BuildRequires:	json-glib-devel >= 0.12.0
 BuildRequires:	libcanberra-gtk3-devel >= 0.26
 BuildRequires:	libdrm-devel
 BuildRequires:	libgudev-devel >= 232
-BuildRequires:	libinput-devel >= 1.18.0
+BuildRequires:	libinput-devel >= 1.19.0
 BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
-BuildRequires:	meson >= 0.53.0
+BuildRequires:	meson >= 0.55.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.46.0
-%{?with_pipewire:BuildRequires:	pipewire-devel >= 0.3.21}
+%{?with_pipewire:BuildRequires:	pipewire-devel >= 0.3.33}
 BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	startup-notification-devel >= 0.7
@@ -54,10 +56,9 @@ BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel >= 1:228
-BuildRequires:	upower-devel >= 0.99.0
-BuildRequires:	wayland-devel >= 1.18
+BuildRequires:	wayland-devel >= 1.20
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.21
+BuildRequires:	wayland-protocols >= 1.25
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
@@ -67,7 +68,7 @@ BuildRequires:	xorg-lib-libXcomposite-devel >= 0.4
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
-BuildRequires:	xorg-lib-libXfixes-devel >= 3
+BuildRequires:	xorg-lib-libXfixes-devel >= 6
 BuildRequires:	xorg-lib-libXi-devel >= 1.7.4
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.5.0
@@ -90,7 +91,7 @@ Obsoletes:	mutter-wayland < 3.14
 Obsoletes:	mutter-wayland-apidocs < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		apiver		9
+%define		apiver		10
 
 %description
 Mutter is a window and compositing manager that displays and manages
@@ -119,17 +120,16 @@ Requires:	graphene >= 1.10.2
 Requires:	gtk+3 >= 3.20.0
 Requires:	json-glib >= 0.12.0
 Requires:	libcanberra-gtk3 >= 0.26
-Requires:	libinput >= 1.18.0
+Requires:	libinput >= 1.19.0
 Requires:	libwacom >= 0.13
 Requires:	pango >= 1:1.46.0
-%{?with_pipewire:Requires:	pipewire-libs >= 0.3.21}
+%{?with_pipewire:Requires:	pipewire-libs >= 0.3.33}
 Requires:	startup-notification >= 0.7
 Requires:	libgudev >= 232
 Requires:	udev-libs >= 1:228
-Requires:	upower-libs >= 0.99.0
-Requires:	wayland >= 1.18
+Requires:	wayland >= 1.20
 Requires:	xorg-lib-libXcomposite >= 0.4
-Requires:	xorg-lib-libXfixes >= 3
+Requires:	xorg-lib-libXfixes >= 6
 Requires:	xorg-lib-libXi >= 1.7.4
 Requires:	xorg-lib-libXrandr >= 1.5.0
 Obsoletes:	mutter-wayland-libs < 3.14
@@ -157,7 +157,7 @@ Requires:	gtk+3-devel >= 3.20.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	libdrm-devel
 Requires:	startup-notification-devel >= 0.7
-Requires:	wayland-devel >= 1.8
+Requires:	wayland-devel >= 1.20
 Requires:	wayland-egl-devel
 Requires:	xorg-lib-libX11-devel
 Requires:	xorg-lib-libXau-devel
@@ -165,7 +165,7 @@ Requires:	xorg-lib-libXcomposite-devel >= 0.4
 Requires:	xorg-lib-libXcursor-devel
 Requires:	xorg-lib-libXdamage-devel
 Requires:	xorg-lib-libXext-devel
-Requires:	xorg-lib-libXfixes-devel >= 3
+Requires:	xorg-lib-libXfixes-devel >= 6
 Requires:	xorg-lib-libXi-devel >= 1.7.4
 Requires:	xorg-lib-libXrandr-devel >= 1.5.0
 Requires:	xorg-lib-libXrender-devel
@@ -180,12 +180,25 @@ Header files for developing Mutter plugins.
 Pliki nagłówkowe do tworzenia wtyczek zarządcy okien i składania
 Mutter.
 
+%package apidocs
+Summary:	API documentation for Mutter libaries
+Summary(pl.UTF-8):	Dokumentacja API bibliotek Mutter
+Group:		Documentation
+BuildArch:	noarch
+
+%description apidocs
+API documentation for Mutter libaries.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API bibliotek Mutter.
+
 %prep
 %setup -q
 %patch0 -p1
 
 %build
 %meson build \
+	%{?with_apidocs:-Ddocs=true} \
 	%{?with_eglstream:-Degl_device=true} \
 	%{?with_eglstream:-Dwayland_eglstream=true} \
 	-Dgles2_libname=libGLESv2.so.2 \
@@ -201,6 +214,12 @@ Mutter.
 rm -rf $RPM_BUILD_ROOT
 
 %ninja_install -C build
+
+%if %{with apidocs}
+# FIXME: where to package gi-docgen generated docs?
+install -d $RPM_BUILD_ROOT%{_gtkdocdir}
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/mutter-10/doc $RPM_BUILD_ROOT%{_gtkdocdir}/mutter-%{apiver}
+%endif
 
 %find_lang %{name}
 
@@ -269,3 +288,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/mutter-clutter-%{apiver}.pc
 %{_pkgconfigdir}/mutter-cogl-%{apiver}.pc
 %{_pkgconfigdir}/mutter-cogl-pango-%{apiver}.pc
+
+%if %{with apidocs}
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/mutter-%{apiver}
+%endif
