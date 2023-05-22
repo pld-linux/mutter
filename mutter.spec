@@ -9,12 +9,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	42.9
-Release:	2
+Version:	43.5
+Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	https://download.gnome.org/sources/mutter/42/%{name}-%{version}.tar.xz
-# Source0-md5:	51d09a8bbac9a245b351e531603f2291
+Source0:	https://download.gnome.org/sources/mutter/43/%{name}-%{version}.tar.xz
+# Source0-md5:	96e2cdd0767aa2ee26c936595a5a3b90
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
@@ -91,7 +91,7 @@ Obsoletes:	mutter-wayland < 3.14
 Obsoletes:	mutter-wayland-apidocs < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		apiver		10
+%define		apiver		11
 
 %description
 Mutter is a window and compositing manager that displays and manages
@@ -218,7 +218,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 # FIXME: where to package gi-docgen generated docs?
 install -d $RPM_BUILD_ROOT%{_gtkdocdir}
-%{__mv} $RPM_BUILD_ROOT%{_datadir}/mutter-10/doc $RPM_BUILD_ROOT%{_gtkdocdir}/mutter-%{apiver}
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/mutter-11/doc $RPM_BUILD_ROOT%{_gtkdocdir}/mutter-%{apiver}
 %endif
 
 %find_lang %{name}
