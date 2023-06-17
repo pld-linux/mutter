@@ -18,8 +18,10 @@ Source0:	https://download.gnome.org/sources/mutter/43/%{name}-%{version}.tar.xz
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
-BuildRequires:	OpenGL-GLX-devel
+# <EGL/eglmesaext.h>
+BuildRequires:	Mesa-libEGL-devel
 BuildRequires:	Mesa-libgbm-devel >= 17.3
+BuildRequires:	OpenGL-GLX-devel
 BuildRequires:	atk-devel >= 1:2.6
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	cairo-gobject-devel >= 1.14.0
