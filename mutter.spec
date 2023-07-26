@@ -9,44 +9,47 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	43.7
+Version:	44.3
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	https://download.gnome.org/sources/mutter/43/%{name}-%{version}.tar.xz
-# Source0-md5:	33ed7876cfe32273baa437562dae7f2e
+Source0:	https://download.gnome.org/sources/mutter/44/%{name}-%{version}.tar.xz
+# Source0-md5:	c9a692911a8ff849c6bbfb44eca7a92f
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
 # <EGL/eglmesaext.h>
 BuildRequires:	Mesa-libEGL-devel
-BuildRequires:	Mesa-libgbm-devel >= 17.3
+BuildRequires:	Mesa-libgbm-devel >= 21.3
 BuildRequires:	OpenGL-GLX-devel
 BuildRequires:	atk-devel >= 1:2.6
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	cairo-gobject-devel >= 1.14.0
+BuildRequires:	colord-devel >= 1.4.5
 BuildRequires:	dbus-devel
 %{?with_eglstream:BuildRequires:	egl-wayland-devel}
 BuildRequires:	fribidi-devel >= 1.0.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	gettext-tools >= 0.19.6
 %{?with_apidocs:BuildRequires:	gi-docgen >= 2021.1}
-BuildRequires:	glib2-devel >= 1:2.69.0
+BuildRequires:	glib2-devel >= 1:2.75.1
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gnome-settings-daemon-devel
 BuildRequires:	gobject-introspection-devel >= 1.40.0
 BuildRequires:	graphene-devel >= 1.10.2
 BuildRequires:	gsettings-desktop-schemas-devel >= 40
-BuildRequires:	gtk+3-devel >= 3.20.0
+BuildRequires:	gtk4-devel >= 4.0.0
+BuildRequires:	harfbuzz-devel >= 2.6
 BuildRequires:	json-glib-devel >= 0.12.0
-BuildRequires:	libcanberra-gtk3-devel >= 0.26
+BuildRequires:	lcms2-devel >= 2.6
+BuildRequires:	libcanberra-devel >= 0.26
 BuildRequires:	libdrm-devel
 BuildRequires:	libgudev-devel >= 232
 BuildRequires:	libinput-devel >= 1.19.0
 BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
-BuildRequires:	meson >= 0.55.0
+BuildRequires:	meson >= 0.58.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.46.0
 %{?with_pipewire:BuildRequires:	pipewire-devel >= 0.3.33}
@@ -58,13 +61,13 @@ BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel >= 1:228
-BuildRequires:	wayland-devel >= 1.20
+BuildRequires:	wayland-devel >= 1.21
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.25
+BuildRequires:	wayland-protocols >= 1.31
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
-BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libX11-devel >= 1.7.0
 BuildRequires:	xorg-lib-libXau-devel
 BuildRequires:	xorg-lib-libXcomposite-devel >= 0.4
 BuildRequires:	xorg-lib-libXcursor-devel
@@ -83,9 +86,11 @@ BuildRequires:	xorg-xserver-Xwayland-devel >= 21.1
 # /usr/bin/cvt
 BuildRequires:	xorg-xserver-server-tools
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.69.0
+Requires(post,postun):	glib2 >= 1:2.75.1
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	colord >= 1.4.5
 Requires:	gsettings-desktop-schemas >= 40
+Requires:	lcms2 >= 2.6
 Requires:	zenity
 Provides:	gnome-wm
 Obsoletes:	mutter-apidocs < 3.18
@@ -93,7 +98,7 @@ Obsoletes:	mutter-wayland < 3.14
 Obsoletes:	mutter-wayland-apidocs < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		apiver		11
+%define		apiver		12
 
 %description
 Mutter is a window and compositing manager that displays and manages
@@ -111,12 +116,12 @@ odziedziczoną z zarządcy okien Metacity.
 Summary:	Mutter shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona zarządcy okien Mutter
 Group:		Libraries
-Requires:	Mesa-libgbm >= 17.3
+Requires:	Mesa-libgbm >= 21.3
 Requires:	atk >= 1:2.6
 Requires:	cairo >= 1.10.0
 Requires:	cairo-gobject >= 1.14.0
 Requires:	fribidi >= 1.0.0
-Requires:	glib2 >= 1:2.69.0
+Requires:	glib2 >= 1:2.75.1
 Requires:	gnome-desktop >= 3.0
 Requires:	graphene >= 1.10.2
 Requires:	gtk+3 >= 3.20.0
@@ -129,7 +134,8 @@ Requires:	pango >= 1:1.46.0
 Requires:	startup-notification >= 0.7
 Requires:	libgudev >= 232
 Requires:	udev-libs >= 1:228
-Requires:	wayland >= 1.20
+Requires:	wayland >= 1.21
+Requires:	xorg-lib-libX11 >= 1.7.0
 Requires:	xorg-lib-libXcomposite >= 0.4
 Requires:	xorg-lib-libXfixes >= 6
 Requires:	xorg-lib-libXi >= 1.7.4
@@ -149,19 +155,19 @@ Summary(pl.UTF-8):	Pakiet programistyczny do wtyczek zarządcy okien Mutter
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	EGL-devel
-Requires:	Mesa-libgbm-devel >= 17.3
+Requires:	Mesa-libgbm-devel >= 21.3
 Requires:	cairo-devel >= 1.10.0
 Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.0
-Requires:	glib2-devel >= 1:2.69.0
+Requires:	glib2-devel >= 1:2.75.1
 Requires:	graphene-devel >= 1.10.2
 Requires:	gtk+3-devel >= 3.20.0
 Requires:	libcanberra-gtk3-devel >= 0.26
 Requires:	libdrm-devel
 Requires:	startup-notification-devel >= 0.7
-Requires:	wayland-devel >= 1.20
+Requires:	wayland-devel >= 1.21
 Requires:	wayland-egl-devel
-Requires:	xorg-lib-libX11-devel
+Requires:	xorg-lib-libX11-devel >= 1.7.0
 Requires:	xorg-lib-libXau-devel
 Requires:	xorg-lib-libXcomposite-devel >= 0.4
 Requires:	xorg-lib-libXcursor-devel
@@ -220,7 +226,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 # FIXME: where to package gi-docgen generated docs?
 install -d $RPM_BUILD_ROOT%{_gtkdocdir}
-%{__mv} $RPM_BUILD_ROOT%{_datadir}/mutter-11/doc $RPM_BUILD_ROOT%{_gtkdocdir}/mutter-%{apiver}
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/mutter-%{apiver}/doc $RPM_BUILD_ROOT%{_gtkdocdir}/mutter-%{apiver}
 %endif
 
 %find_lang %{name}
@@ -244,8 +250,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/mutter-%{apiver}/plugins
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/plugins/libdefault.so
 %attr(755,root,root) %{_libexecdir}/mutter-restart-helper
+%attr(755,root,root) %{_libexecdir}/mutter-x11-frames
 /lib/udev/rules.d/61-mutter.rules
-%{_desktopdir}/mutter.desktop
 %{_datadir}/GConf/gsettings/mutter-schemas.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.wayland.gschema.xml
