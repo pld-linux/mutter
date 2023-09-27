@@ -54,7 +54,7 @@ BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.46.0
 %{?with_pipewire:BuildRequires:	pipewire-devel >= 0.3.33}
 BuildRequires:	pkgconfig >= 1:0.21
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.029
 BuildRequires:	startup-notification-devel >= 0.7
 %{?with_sysprof:BuildRequires:	sysprof-devel >= 3.37.2}
 # or elogind-devel
@@ -224,9 +224,8 @@ rm -rf $RPM_BUILD_ROOT
 %ninja_install -C build
 
 %if %{with apidocs}
-# FIXME: where to package gi-docgen generated docs?
-install -d $RPM_BUILD_ROOT%{_gtkdocdir}
-%{__mv} $RPM_BUILD_ROOT%{_datadir}/mutter-%{apiver}/doc $RPM_BUILD_ROOT%{_gtkdocdir}/mutter-%{apiver}
+install -d $RPM_BUILD_ROOT%{_gidocdir}
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/mutter-%{apiver}/doc $RPM_BUILD_ROOT%{_gidocdir}/mutter-%{apiver}
 %endif
 
 %find_lang %{name}
@@ -300,5 +299,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/mutter-%{apiver}
+%{_gidocdir}/mutter-%{apiver}
 %endif
