@@ -33,7 +33,7 @@ BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	gettext-tools >= 0.19.6
 %{?with_apidocs:BuildRequires:	gi-docgen >= 2021.1}
 BuildRequires:	glib2-devel >= 1:2.75.1
-BuildRequires:	gnome-desktop-devel >= 3.0
+BuildRequires:	gnome-desktop4-devel >= 42
 BuildRequires:	gnome-settings-daemon-devel
 BuildRequires:	gobject-introspection-devel >= 1.40.0
 BuildRequires:	graphene-devel >= 1.10.2
@@ -122,7 +122,7 @@ Requires:	cairo >= 1.10.0
 Requires:	cairo-gobject >= 1.14.0
 Requires:	fribidi >= 1.0.0
 Requires:	glib2 >= 1:2.75.1
-Requires:	gnome-desktop >= 3.0
+Requires:	gnome-desktop4 >= 42
 Requires:	graphene >= 1.10.2
 Requires:	gtk+3 >= 3.20.0
 Requires:	json-glib >= 0.12.0
