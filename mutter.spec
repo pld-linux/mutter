@@ -130,6 +130,7 @@ Requires:	gnome-desktop4 >= 42
 Requires:	graphene >= 1.10.2
 Requires:	json-glib >= 0.12.0
 Requires:	libcanberra >= 0.26
+Requires:	libeis >= 1.1
 Requires:	libinput >= 1.19.0
 Requires:	libwacom >= 0.13
 Requires:	pango >= 1:1.46.0
