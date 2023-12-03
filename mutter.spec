@@ -9,12 +9,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	44.6
+Version:	45.2
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	https://download.gnome.org/sources/mutter/44/%{name}-%{version}.tar.xz
-# Source0-md5:	011f0a722a5e4644007407531097afcd
+Source0:	https://download.gnome.org/sources/mutter/45/%{name}-%{version}.tar.xz
+# Source0-md5:	5e210826424ccd997dc61ca42000872b
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
@@ -38,18 +38,22 @@ BuildRequires:	gnome-settings-daemon-devel
 BuildRequires:	gobject-introspection-devel >= 1.40.0
 BuildRequires:	graphene-devel >= 1.10.2
 BuildRequires:	gsettings-desktop-schemas-devel >= 40
+%{?with_tests:BuildRequires:	gtk+3-devel >= 3.19.8}
 BuildRequires:	gtk4-devel >= 4.0.0
 BuildRequires:	harfbuzz-devel >= 2.6
 BuildRequires:	json-glib-devel >= 0.12.0
 BuildRequires:	lcms2-devel >= 2.6
 BuildRequires:	libcanberra-devel >= 0.26
+BuildRequires:	libdisplay-info-devel
 BuildRequires:	libdrm-devel
+BuildRequires:	libei-devel >= 1.1
+BuildRequires:	libeis-devel >= 1.1
 BuildRequires:	libgudev-devel >= 232
 BuildRequires:	libinput-devel >= 1.19.0
 BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
-BuildRequires:	meson >= 0.58.0
+BuildRequires:	meson >= 0.60.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.46.0
 %{?with_pipewire:BuildRequires:	pipewire-devel >= 0.3.33}
@@ -63,7 +67,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel >= 1:228
 BuildRequires:	wayland-devel >= 1.21
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.31
+BuildRequires:	wayland-protocols >= 1.32
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
@@ -98,7 +102,7 @@ Obsoletes:	mutter-wayland < 3.14
 Obsoletes:	mutter-wayland-apidocs < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		apiver		12
+%define		apiver		13
 
 %description
 Mutter is a window and compositing manager that displays and manages
@@ -124,9 +128,8 @@ Requires:	fribidi >= 1.0.0
 Requires:	glib2 >= 1:2.75.1
 Requires:	gnome-desktop4 >= 42
 Requires:	graphene >= 1.10.2
-Requires:	gtk+3 >= 3.20.0
 Requires:	json-glib >= 0.12.0
-Requires:	libcanberra-gtk3 >= 0.26
+Requires:	libcanberra >= 0.26
 Requires:	libinput >= 1.19.0
 Requires:	libwacom >= 0.13
 Requires:	pango >= 1:1.46.0
@@ -161,8 +164,7 @@ Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.0
 Requires:	glib2-devel >= 1:2.75.1
 Requires:	graphene-devel >= 1.10.2
-Requires:	gtk+3-devel >= 3.20.0
-Requires:	libcanberra-gtk3-devel >= 0.26
+Requires:	libcanberra-devel >= 0.26
 Requires:	libdrm-devel
 Requires:	startup-notification-devel >= 0.7
 Requires:	wayland-devel >= 1.21
@@ -271,12 +273,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-pango-%{apiver}.so.0
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.*.*.*
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.0
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so.*.*.*
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so.0
 # intentionally installed in package-private dir
 %{_libdir}/mutter-%{apiver}/Cally-%{apiver}.typelib
 %{_libdir}/mutter-%{apiver}/Clutter-%{apiver}.typelib
 %{_libdir}/mutter-%{apiver}/Cogl-%{apiver}.typelib
 %{_libdir}/mutter-%{apiver}/CoglPango-%{apiver}.typelib
 %{_libdir}/mutter-%{apiver}/Meta-%{apiver}.typelib
+%{_libdir}/mutter-%{apiver}/Mtk-%{apiver}.typelib
 
 %files devel
 %defattr(644,root,root,755)
@@ -284,6 +289,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-pango-%{apiver}.so
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so
+%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so
 %{_includedir}/mutter-%{apiver}
 # intentionally installed in package-private dir
 %{_libdir}/mutter-%{apiver}/Cally-%{apiver}.gir
@@ -291,10 +297,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mutter-%{apiver}/Cogl-%{apiver}.gir
 %{_libdir}/mutter-%{apiver}/CoglPango-%{apiver}.gir
 %{_libdir}/mutter-%{apiver}/Meta-%{apiver}.gir
+%{_libdir}/mutter-%{apiver}/Mtk-%{apiver}.gir
 %{_pkgconfigdir}/libmutter-%{apiver}.pc
 %{_pkgconfigdir}/mutter-clutter-%{apiver}.pc
 %{_pkgconfigdir}/mutter-cogl-%{apiver}.pc
 %{_pkgconfigdir}/mutter-cogl-pango-%{apiver}.pc
+%{_pkgconfigdir}/mutter-mtk-%{apiver}.pc
 
 %if %{with apidocs}
 %files apidocs
