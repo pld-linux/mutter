@@ -9,12 +9,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	45.4
+Version:	46.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	https://download.gnome.org/sources/mutter/45/%{name}-%{version}.tar.xz
-# Source0-md5:	74e84722518707c0768f9753fc3492d7
+Source0:	https://download.gnome.org/sources/mutter/46/%{name}-%{version}.tar.xz
+# Source0-md5:	bc2266ac2c507f88bcd4d86ab93886ad
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
@@ -41,11 +41,10 @@ BuildRequires:	gsettings-desktop-schemas-devel >= 40
 %{?with_tests:BuildRequires:	gtk+3-devel >= 3.19.8}
 BuildRequires:	gtk4-devel >= 4.0.0
 BuildRequires:	harfbuzz-devel >= 2.6
-BuildRequires:	json-glib-devel >= 0.12.0
 BuildRequires:	lcms2-devel >= 2.6
 BuildRequires:	libcanberra-devel >= 0.26
 BuildRequires:	libdisplay-info-devel
-BuildRequires:	libdrm-devel
+BuildRequires:	libdrm-devel >= 2.4.118
 BuildRequires:	libei-devel >= 1.1
 BuildRequires:	libeis-devel >= 1.1
 BuildRequires:	libgudev-devel >= 232
@@ -57,6 +56,7 @@ BuildRequires:	meson >= 0.60.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.46.0
 %{?with_pipewire:BuildRequires:	pipewire-devel >= 0.3.33}
+BuildRequires:	pixman-devel >= 0.42
 BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	rpmbuild(macros) >= 2.029
 BuildRequires:	startup-notification-devel >= 0.7
@@ -65,9 +65,9 @@ BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel >= 1:228
-BuildRequires:	wayland-devel >= 1.21
+BuildRequires:	wayland-devel >= 1.22
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.32
+BuildRequires:	wayland-protocols >= 1.33
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
@@ -102,7 +102,7 @@ Obsoletes:	mutter-wayland < 3.14
 Obsoletes:	mutter-wayland-apidocs < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		apiver		13
+%define		apiver		14
 
 %description
 Mutter is a window and compositing manager that displays and manages
@@ -128,17 +128,18 @@ Requires:	fribidi >= 1.0.0
 Requires:	glib2 >= 1:2.75.1
 Requires:	gnome-desktop4 >= 42
 Requires:	graphene >= 1.10.2
-Requires:	json-glib >= 0.12.0
 Requires:	libcanberra >= 0.26
+Requires:	libdrm >= 2.4.118
 Requires:	libeis >= 1.1
 Requires:	libinput >= 1.19.0
 Requires:	libwacom >= 0.13
 Requires:	pango >= 1:1.46.0
 %{?with_pipewire:Requires:	pipewire-libs >= 0.3.33}
+Requires:	pixman >= 0.42
 Requires:	startup-notification >= 0.7
 Requires:	libgudev >= 232
 Requires:	udev-libs >= 1:228
-Requires:	wayland >= 1.21
+Requires:	wayland >= 1.22
 Requires:	xorg-lib-libX11 >= 1.7.0
 Requires:	xorg-lib-libXcomposite >= 0.4
 Requires:	xorg-lib-libXfixes >= 6
@@ -166,9 +167,10 @@ Requires:	gdk-pixbuf2-devel >= 2.0
 Requires:	glib2-devel >= 1:2.75.1
 Requires:	graphene-devel >= 1.10.2
 Requires:	libcanberra-devel >= 0.26
-Requires:	libdrm-devel
+Requires:	libdrm-devel >= 2.4.118
+Requires:	pixman-devel >= 0.42
 Requires:	startup-notification-devel >= 0.7
-Requires:	wayland-devel >= 1.21
+Requires:	wayland-devel >= 1.22
 Requires:	wayland-egl-devel
 Requires:	xorg-lib-libX11-devel >= 1.7.0
 Requires:	xorg-lib-libXau-devel
