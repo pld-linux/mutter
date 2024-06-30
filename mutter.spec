@@ -9,12 +9,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	46.2
+Version:	46.3
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	https://download.gnome.org/sources/mutter/46/%{name}-%{version}.tar.xz
-# Source0-md5:	610b76a24ad65ffb6617b2dd74796ebe
+# Source0-md5:	4b409552963dabc5ad89f95b00bc6326
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
