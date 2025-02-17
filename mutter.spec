@@ -9,12 +9,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	47.4
+Version:	47.5
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	https://download.gnome.org/sources/mutter/47/%{name}-%{version}.tar.xz
-# Source0-md5:	ff781ff350f2172aa1a2f7532b676e77
+# Source0-md5:	c899a4fed30ce1a99f0e17567b59cfb9
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
@@ -58,7 +58,7 @@ BuildRequires:	pango-devel >= 1:1.46.0
 %{?with_pipewire:BuildRequires:	pipewire-devel >= 1.2.0}
 BuildRequires:	pixman-devel >= 0.42
 BuildRequires:	pkgconfig >= 1:0.21
-BuildRequires:	rpmbuild(macros) >= 2.029
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	startup-notification-devel >= 0.7
 %{?with_sysprof:BuildRequires:	sysprof-devel >= 3.37.2}
 # or elogind-devel
@@ -210,7 +210,7 @@ Dokumentacja API bibliotek Mutter.
 %patch -P0 -p1
 
 %build
-%meson build \
+%meson \
 	%{?with_apidocs:-Ddocs=true} \
 	%{?with_eglstream:-Degl_device=true} \
 	%{?with_eglstream:-Dwayland_eglstream=true} \
@@ -220,12 +220,12 @@ Dokumentacja API bibliotek Mutter.
 	-Dtests=%{__enabled_disabled tests} \
 	-Dxwayland_path=/usr/bin/Xwayland
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %if %{with apidocs}
 install -d $RPM_BUILD_ROOT%{_gidocdir}
