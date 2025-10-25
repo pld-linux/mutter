@@ -9,12 +9,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	48.5
+Version:	48.6
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
 Source0:	https://download.gnome.org/sources/mutter/48/%{name}-%{version}.tar.xz
-# Source0-md5:	adf9584e946dabfc4ffda34b29b46fc6
+# Source0-md5:	de01a065f23e9dc9086a98f2df448f3c
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
@@ -275,14 +275,14 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libmutter-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmutter-%{apiver}.so.0
+%ghost %{_libdir}/libmutter-%{apiver}.so.0
 %dir %{_libdir}/mutter-%{apiver}
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so.0
+%{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so.0
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.0
+%{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.0
 %attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so.*.*.*
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so.0
+%{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so.0
 # intentionally installed in package-private dir
 %{_libdir}/mutter-%{apiver}/Clutter-%{apiver}.typelib
 %{_libdir}/mutter-%{apiver}/Cogl-%{apiver}.typelib
@@ -291,10 +291,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-%{apiver}.so
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so
+%{_libdir}/libmutter-%{apiver}.so
+%{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so
+%{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so
+%{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so
 %{_includedir}/mutter-%{apiver}
 # intentionally installed in package-private dir
 %{_libdir}/mutter-%{apiver}/Clutter-%{apiver}.gir
