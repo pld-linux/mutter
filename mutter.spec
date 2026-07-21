@@ -9,12 +9,12 @@
 Summary:	Window and compositing manager based on Clutter
 Summary(pl.UTF-8):	Zarządca okien i składania oparty na bibliotece Clutter
 Name:		mutter
-Version:	48.8
+Version:	50.3
 Release:	1
 License:	GPL v2+
 Group:		X11/Window Managers
-Source0:	https://download.gnome.org/sources/mutter/48/%{name}-%{version}.tar.xz
-# Source0-md5:	f3dd5cfc655c9881548f55ebcd92db3b
+Source0:	https://download.gnome.org/sources/mutter/50/%{name}-%{version}.tar.xz
+# Source0-md5:	297527865ae31d6446b835ab6d85489d
 Patch0:		%{name}-deps.patch
 URL:		https://gitlab.gnome.org/GNOME/mutter
 BuildRequires:	EGL-devel
@@ -33,29 +33,32 @@ BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	gettext-tools >= 0.19.6
 %{?with_apidocs:BuildRequires:	gi-docgen >= 2021.1}
 BuildRequires:	glib2-devel >= 1:2.81.1
+BuildRequires:	glycin-devel >= 2.0
 BuildRequires:	gnome-desktop4-devel >= 42
 BuildRequires:	gnome-settings-daemon-devel
 BuildRequires:	gobject-introspection-devel >= 1.40.0
 BuildRequires:	graphene-devel >= 1.10.2
 BuildRequires:	gsettings-desktop-schemas-devel >= 47
 %{?with_tests:BuildRequires:	gtk+3-devel >= 3.19.8}
-BuildRequires:	gtk4-devel >= 4.0.0
+BuildRequires:	gtk4-devel >= 4.14.0
 BuildRequires:	harfbuzz-devel >= 2.6
 BuildRequires:	lcms2-devel >= 2.6
+BuildRequires:	libadwaita-devel
 BuildRequires:	libcanberra-devel >= 0.26
 BuildRequires:	libdisplay-info-devel >= 0.2
 BuildRequires:	libdrm-devel >= 2.4.118
 BuildRequires:	libei-devel >= 1.4
 BuildRequires:	libeis-devel >= 1.4
 BuildRequires:	libgudev-devel >= 238
-BuildRequires:	libinput-devel >= 1.27.0
+BuildRequires:	libinput-devel >= 1.30.0
 BuildRequires:	libwacom-devel >= 0.13
 # xcb-randr, xcb-res
 BuildRequires:	libxcb-devel
-BuildRequires:	meson >= 1.3.0
+BuildRequires:	libxkbregistry-devel
+BuildRequires:	meson >= 1.5.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.46.0
-%{?with_pipewire:BuildRequires:	pipewire-devel >= 1.2.0}
+%{?with_pipewire:BuildRequires:	pipewire-devel >= 1.6.0}
 BuildRequires:	pixman-devel >= 0.42
 BuildRequires:	pkgconfig >= 1:0.21
 BuildRequires:	python3-argcomplete
@@ -66,9 +69,10 @@ BuildRequires:	startup-notification-devel >= 0.7
 BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel >= 1:228
-BuildRequires:	wayland-devel >= 1.23
+%{?with_tests:BuildRequires:	umockdev-devel >= 0.3.0}
+BuildRequires:	wayland-devel >= 1.24
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.41
+BuildRequires:	wayland-protocols >= 1.47
 BuildRequires:	xkeyboard-config
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
@@ -95,6 +99,7 @@ Requires(post,postun):	glib2 >= 1:2.81.1
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	colord >= 1.4.5
 Requires:	gsettings-desktop-schemas >= 47
+Requires:	gtk4 >= 4.14.0
 Requires:	lcms2 >= 2.6
 Requires:	zenity
 Provides:	gnome-wm
@@ -103,7 +108,7 @@ Obsoletes:	mutter-wayland < 3.14
 Obsoletes:	mutter-wayland-apidocs < 3.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		apiver		16
+%define		apiver		18
 
 %description
 Mutter is a window and compositing manager that displays and manages
@@ -132,15 +137,15 @@ Requires:	graphene >= 1.10.2
 Requires:	libcanberra >= 0.26
 Requires:	libdrm >= 2.4.118
 Requires:	libeis >= 1.4
-Requires:	libinput >= 1.27.0
+Requires:	libinput >= 1.30.0
 Requires:	libwacom >= 0.13
 Requires:	pango >= 1:1.46.0
-%{?with_pipewire:Requires:	pipewire-libs >= 1.2.0}
+%{?with_pipewire:Requires:	pipewire-libs >= 1.6.0}
 Requires:	pixman >= 0.42
 Requires:	startup-notification >= 0.7
 Requires:	libgudev >= 238
 Requires:	udev-libs >= 1:228
-Requires:	wayland >= 1.23
+Requires:	wayland >= 1.24
 Requires:	xorg-lib-libX11 >= 1.7.0
 Requires:	xorg-lib-libXcomposite >= 0.4
 Requires:	xorg-lib-libXfixes >= 6
@@ -171,7 +176,7 @@ Requires:	libcanberra-devel >= 0.26
 Requires:	libdrm-devel >= 2.4.118
 Requires:	pixman-devel >= 0.42
 Requires:	startup-notification-devel >= 0.7
-Requires:	wayland-devel >= 1.23
+Requires:	wayland-devel >= 1.24
 Requires:	wayland-egl-devel
 Requires:	xorg-lib-libX11-devel >= 1.7.0
 Requires:	xorg-lib-libXau-devel
@@ -210,11 +215,12 @@ Dokumentacja API bibliotek Mutter.
 %setup -q
 %patch -P0 -p1
 
-%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' tools/gdctl
+%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' tools/{gdctl,gnome-service-client}
 
 %build
 %meson \
 	--default-library=shared \
+	-Ddevkit=enabled \
 	%{?with_apidocs:-Ddocs=true} \
 	%{?with_eglstream:-Degl_device=true} \
 	%{?with_eglstream:-Dwayland_eglstream=true} \
@@ -253,35 +259,44 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc NEWS doc/*.txt
+%doc NEWS README.md
 %attr(755,root,root) %{_bindir}/gdctl
+%attr(755,root,root) %{_bindir}/gnome-service-client
 %attr(755,root,root) %{_bindir}/mutter
 %dir %{_libdir}/mutter-%{apiver}/plugins
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/plugins/libdefault.so
-%attr(755,root,root) %{_libexecdir}/mutter-restart-helper
+%{_libdir}/mutter-%{apiver}/plugins/libdefault.so
+%attr(755,root,root) %{_libexecdir}/mutter-backlight-helper
+%attr(755,root,root) %{_libexecdir}/mutter-devkit
 %attr(755,root,root) %{_libexecdir}/mutter-x11-frames
 /lib/udev/rules.d/61-mutter.rules
 %{_datadir}/GConf/gsettings/mutter-schemas.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.mutter.devkit.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.mutter.wayland.gschema.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-wayland.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-windows.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-navigation.xml
 %{_datadir}/gnome-control-center/keybindings/50-mutter-system.xml
+%{_datadir}/polkit-1/actions/org.gnome.mutter.backlight-helper.policy
 %{bash_compdir}/gdctl
+%{_desktopdir}/org.gnome.Mutter.Mdk.desktop
+%{_iconsdir}/hicolor/scalable/apps/org.gnome.Mutter.Mdk.Devel.svg
+%{_iconsdir}/hicolor/scalable/apps/org.gnome.Mutter.Mdk.svg
+%{_iconsdir}/hicolor/symbolic/apps/org.gnome.Mutter.Mdk-symbolic.svg
 %{_mandir}/man1/gdctl.1*
+%{_mandir}/man1/gnome-service-client.1*
 %{_mandir}/man1/mutter.1*
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmutter-%{apiver}.so.*.*.*
+%{_libdir}/libmutter-%{apiver}.so.*.*.*
 %ghost %{_libdir}/libmutter-%{apiver}.so.0
 %dir %{_libdir}/mutter-%{apiver}
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so.*.*.*
+%{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so.*.*.*
 %{_libdir}/mutter-%{apiver}/libmutter-clutter-%{apiver}.so.0
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.*.*.*
+%{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.*.*.*
 %{_libdir}/mutter-%{apiver}/libmutter-cogl-%{apiver}.so.0
-%attr(755,root,root) %{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so.*.*.*
+%{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so.*.*.*
 %{_libdir}/mutter-%{apiver}/libmutter-mtk-%{apiver}.so.0
 # intentionally installed in package-private dir
 %{_libdir}/mutter-%{apiver}/Clutter-%{apiver}.typelib
